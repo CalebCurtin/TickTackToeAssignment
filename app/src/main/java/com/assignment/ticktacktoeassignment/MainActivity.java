@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
     private MenuFragment menuFragment = new MenuFragment();
+    private GameScreenFragment gameScreenFragment = new GameScreenFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.mainMenu_Container, menuFragment).commit();
         } else {
             fm.beginTransaction().replace(R.id.mainMenu_Container, menuFragment).commit();
+        }
+    }
+
+    private void loadGameScreen() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
+
+        View mainMenuContainer = findViewById(R.id.mainMenu_Container);
+        if (frag == null) {
+            fm.beginTransaction().add(R.id.mainMenu_Container, gameScreenFragment).commit();
+        } else {
+            fm.beginTransaction().replace(R.id.mainMenu_Container, gameScreenFragment).commit();
         }
     }
 }
