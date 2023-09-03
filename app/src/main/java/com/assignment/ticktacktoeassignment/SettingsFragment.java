@@ -1,12 +1,14 @@
 package com.assignment.ticktacktoeassignment;
 
 import android.os.Bundle;
-
+import android.widget.Spinner;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +25,10 @@ public class SettingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Spinner boardSizeSpinner;
+    private Spinner winConditionSpinner;
+    private Spinner playerMarkersSpinner;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -58,7 +64,38 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        boardSizeSpinner = view.findViewById(R.id.BoardSize);
+        winConditionSpinner = view.findViewById(R.id.WinCon);
+        playerMarkersSpinner = view.findViewById(R.id.Markers);
+
+        populateBoardSizeSpinner();
+        populateWinConditionSpinner();
+        populatePlayerMarkersSpinner();
+
+        return view;
+    }
+
+    private void populateBoardSizeSpinner() {
+        String[] boardSizeOptions = {"3x3", "4x4", "5x5"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, boardSizeOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        boardSizeSpinner.setAdapter(adapter);
+    }
+
+    private void populateWinConditionSpinner() {
+        String[] winConditionOptions = {"3 in a row", "4 in a row", "5 in a row"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, winConditionOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        winConditionSpinner.setAdapter(adapter);
+    }
+
+    private void populatePlayerMarkersSpinner()
+    {
+        String[] playerMarkerOptions = {"X", "O",}; //will implement custom a further date
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, playerMarkerOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        playerMarkersSpinner.setAdapter(adapter);
     }
 }
