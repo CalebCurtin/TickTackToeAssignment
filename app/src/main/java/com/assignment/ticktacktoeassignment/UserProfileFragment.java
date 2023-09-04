@@ -2,9 +2,14 @@ package com.assignment.ticktacktoeassignment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.ViewFlipper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +26,12 @@ public class UserProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button right_btn;
+    private ViewFlipper viewFlipper;
+    private Button left_btn;
+    private Button profile_backBtn;
+    private EditText profile_editText;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -56,7 +67,34 @@ public class UserProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        viewFlipper = view.findViewById(R.id.viewFlipper);
+        profile_editText = view.findViewById(R.id.profile_editText);
+        right_btn = view.findViewById(R.id.right_btn);
+        left_btn = view.findViewById(R.id.left_btn);
+        profile_backBtn = view.findViewById(R.id.profile_backBtn);
+
+        right_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewFlipper.showNext();
+            }
+        });
+        left_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewFlipper.showPrevious();
+            }
+        });
+        profile_backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
+                viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+            }
+        });
+
+
+        return view;
     }
 }
