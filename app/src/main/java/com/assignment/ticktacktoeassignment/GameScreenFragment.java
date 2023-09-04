@@ -4,9 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +62,36 @@ public class GameScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_screen, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
+        setupListeners(rootView);
+        return rootView;
+    }
+
+    /**
+     * Adds a click listener to all squares in the grid, which will reveal their image once pressed
+     * @param view
+     */
+    private void setupListeners(View view) {
+        addClickListener(view.findViewById(R.id.imageView_topLeft));
+        addClickListener(view.findViewById(R.id.imageView_topCenter));
+        addClickListener(view.findViewById(R.id.imageView_topRight));
+
+        addClickListener(view.findViewById(R.id.imageView_midLeft));
+        addClickListener(view.findViewById(R.id.imageView_midCenter));
+        addClickListener(view.findViewById(R.id.imageView_midRight));
+
+        addClickListener(view.findViewById(R.id.imageView_botLeft));
+        addClickListener(view.findViewById(R.id.imageView_botCenter));
+        addClickListener(view.findViewById(R.id.imageView_botRight));
+    }
+
+    private void addClickListener(ImageView segment) {
+        segment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                segment.setAlpha(1.0f);
+                Log.println(Log.INFO, "TickTackToe", "User clicked on something");
+            }
+        });
     }
 }
