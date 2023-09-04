@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +25,12 @@ public class GameScreenFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    // Game Params
     private boolean player1 = true;
+    private int boardSize = 3; // <-- This should be changeable from the settings panel
+    private int moveCount = 0;
+    private int[][] board = new int[boardSize][boardSize];
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -65,6 +71,9 @@ public class GameScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
+        board = new int[boardSize][boardSize];
+        moveCount = 0;
+
         setupListeners(rootView);
         return rootView;
     }
@@ -74,30 +83,101 @@ public class GameScreenFragment extends Fragment {
      * @param view
      */
     private void setupListeners(View view) {
-        addClickListener(view.findViewById(R.id.imageView_topLeft));
-        addClickListener(view.findViewById(R.id.imageView_topCenter));
-        addClickListener(view.findViewById(R.id.imageView_topRight));
+        addClickListener(view.findViewById(R.id.imageView_topLeft), 0, 0);
+        addClickListener(view.findViewById(R.id.imageView_topCenter), 0, 1);
+        addClickListener(view.findViewById(R.id.imageView_topRight), 0, 2);
 
-        addClickListener(view.findViewById(R.id.imageView_midLeft));
-        addClickListener(view.findViewById(R.id.imageView_midCenter));
-        addClickListener(view.findViewById(R.id.imageView_midRight));
+        addClickListener(view.findViewById(R.id.imageView_midLeft), 1, 0);
+        addClickListener(view.findViewById(R.id.imageView_midCenter), 1, 1);
+        addClickListener(view.findViewById(R.id.imageView_midRight), 1, 2);
 
-        addClickListener(view.findViewById(R.id.imageView_botLeft));
-        addClickListener(view.findViewById(R.id.imageView_botCenter));
-        addClickListener(view.findViewById(R.id.imageView_botRight));
+        addClickListener(view.findViewById(R.id.imageView_botLeft), 2, 0);
+        addClickListener(view.findViewById(R.id.imageView_botCenter), 2, 1);
+        addClickListener(view.findViewById(R.id.imageView_botRight), 2, 2);
     }
 
-    private void addClickListener(ImageView segment) {
+    private void addClickListener(ImageView segment, int x, int y) {
         segment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                segment.setAlpha(1.0f);
-                if (player1) {
-                    segment.setImageResource(R.drawable.o);
-                }
+                if (board[x][y] == 0) {
 
-                player1 = !player1;
+                    // reveal the square and change the marker
+                    segment.setAlpha(1.0f);
+                    if (player1) {
+                        segment.setImageResource(R.drawable.o);
+                        board[x][y] = 1;
+                    } else {
+                        segment.setImageResource(R.drawable.x);
+                        board[x][y] = 2;
+                    }
+
+                    // update variables
+                    player1 = !player1;
+                    moveCount++;
+
+                    // print board state to logcat
+                    String debug = "Board State: \n";
+                    for (int i = 0; i < boardSize; i++) {
+                        for (int j = 0; j < boardSize; j++) {
+                            debug += board[i][j] + " ";
+                        }
+                        debug += "\n";
+                    }
+                    Log.println(Log.INFO, "TTT", debug);
+
+                    // check for winner
+                    int winner = checkWin();
+                    if (winner == 1 || winner == 2) {
+                        Log.println(Log.INFO, "TTT", "Player " + winner + " won");
+                        loadMainMenu();
+                    } else if (winner == 3) {
+                        Log.println(Log.INFO, "TTT", "It was a draw");
+                        loadMainMenu();
+                    }
+                }
             }
         });
+    }
+
+    /**
+     * Check if a player has won.
+     * There is almost certainly a better way to do this
+     * @return 0 if no win, 1 if player 1 wins, 2 if player 2 wins
+     */
+    private int checkWin() {
+        // Check for a draw
+        if (moveCount >= 9) {
+            return 3;
+        }
+
+        // check vertical lines
+        for (int x = 0; x < boardSize; x++) {
+            if (board[x][0] != 0 && board[x][1] == board[x][0] && board[x][2] == board[x][0]) {
+                return board[x][0];
+            }
+        }
+
+        // check horizontal lines
+        for (int y = 0; y < boardSize; y++) {
+            if (board[0][y] != 0 && board[1][y] == board[0][y] && board[2][y] == board[0][y]) {
+                return board[0][y];
+            }
+        }
+
+        // Check diagonal lines
+        if (board[0][0] != 0 && board[1][1] == board[0][0] && board[2][2] == board[0][0]) {
+            return board[0][0];
+        }
+        if (board[0][2] != 0 && board[1][1] == board[0][2] && board[2][0] == board[0][2]) {
+            return board[0][2];
+        }
+
+        return 0;
+    }
+
+    private void loadMainMenu() {
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
     }
 }
