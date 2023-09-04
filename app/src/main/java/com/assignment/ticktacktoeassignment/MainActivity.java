@@ -3,28 +3,32 @@ package com.assignment.ticktacktoeassignment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import android.view.View;
-import android.os.Bundle;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 
 public class MainActivity extends AppCompatActivity {
     private MenuFragment menuFragment = new MenuFragment();
     private GameScreenFragment gameScreenFragment = new GameScreenFragment();
+    private SettingsFragment settingsFragment = new SettingsFragment();
+    private UserProfileFragment userProfileFragment = new UserProfileFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadInitialMenu();
+
+        // Setup fragment swapping
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(this).get(MainActivityData.class);
+        setupFragmentSwapper(mainActivityDataViewModel);
+
+        // Load the home screen fragment
+        loadMenuScreen();
     }
 
-    private void loadInitialMenu() {
+    private void loadMenuScreen() {
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
 
@@ -46,5 +50,51 @@ public class MainActivity extends AppCompatActivity {
         } else {
             fm.beginTransaction().replace(R.id.mainMenu_Container, gameScreenFragment).commit();
         }
+    }
+
+    private void loadSettingsScreen() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
+
+        View mainMenuContainer = findViewById(R.id.mainMenu_Container);
+        if (frag == null) {
+            fm.beginTransaction().add(R.id.mainMenu_Container, settingsFragment).commit();
+        } else {
+            fm.beginTransaction().replace(R.id.mainMenu_Container, settingsFragment).commit();
+        }
+    }
+
+    private void loadProfileScreen() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
+
+        View mainMenuContainer = findViewById(R.id.mainMenu_Container);
+        if (frag == null) {
+            fm.beginTransaction().add(R.id.mainMenu_Container, userProfileFragment).commit();
+        } else {
+            fm.beginTransaction().replace(R.id.mainMenu_Container, userProfileFragment).commit();
+        }
+    }
+
+    private void setupFragmentSwapper(MainActivityData mainActivityDataViewModel) {
+        mainActivityDataViewModel.clickedValue.observe(this, new Observer<MainActivityData.Fragments>() {
+            @Override
+            public void onChanged(MainActivityData.Fragments clickedValue) {
+                switch (mainActivityDataViewModel.getClickedValue()) {
+                    case MENU_FRAGMENT:
+                        loadMenuScreen();
+                        break;
+                    case GAME_FRAGMENT:
+                        loadGameScreen();
+                        break;
+                    case SETTINGS_FRAGMENT:
+                        loadSettingsScreen();
+                        break;
+                    case PROFILE_FRAGMENT:
+                        loadProfileScreen();
+                        break;
+                }
+            }
+        });
     }
 }

@@ -3,10 +3,12 @@ package com.assignment.ticktacktoeassignment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +60,41 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        // Setup view reference
+        View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        // Setup button references
+        Button gameButton = rootView.findViewById(R.id.startButton);
+        Button settingsButton = rootView.findViewById(R.id.settingsButton);
+        Button profileButton = rootView.findViewById(R.id.profileButton);
+
+        // Setup button listeners
+        setupListeners(gameButton, settingsButton, profileButton);
+
+        return rootView;
+    }
+
+    private void setupListeners(Button gameButton, Button settingsButton, Button profileButton) {
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.GAME_FRAGMENT);
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.SETTINGS_FRAGMENT);
+            }
+        });
+
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.PROFILE_FRAGMENT);
+            }
+        });
     }
 }
