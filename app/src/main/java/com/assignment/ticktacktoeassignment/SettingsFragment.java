@@ -73,9 +73,23 @@ public class SettingsFragment extends Fragment {
         populateBoardSizeSpinner();
         populateWinConditionSpinner();
         populatePlayerMarkersSpinner();
+        Button saveButton = view.findViewById(R.id.button);
 
         return view;
     }
+
+    saveButton.setOnClickListener(new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            // Call a method to save the settings here
+            saveSettings();
+
+            // Navigate back to the menu fragment
+            MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
+            viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+        }
+    });
 
     private void populateBoardSizeSpinner() {
         String[] boardSizeOptions = {"3x3", "4x4", "5x5"};
@@ -97,5 +111,21 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, playerMarkerOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerMarkersSpinner.setAdapter(adapter);
+    }
+
+    private void saveSettings()
+    {
+        // Get the selected values from the Spinners
+        String boardSize = boardSizeSpinner.getSelectedItem().toString();
+        String winCondition = winConditionSpinner.getSelectedItem().toString();
+        String playerMarker = playerMarkersSpinner.getSelectedItem().toString();
+
+        // Save the settings using SharedPreferences
+        SharedPreferences preferences = requireContext().getSharedPreferences("GameSettings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("boardSize", boardSize);
+        editor.putString("winCondition", winCondition);
+        editor.putString("playerMarker", playerMarker);
+        editor.apply();
     }
 }
