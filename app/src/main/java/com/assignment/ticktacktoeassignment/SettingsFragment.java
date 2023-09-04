@@ -77,8 +77,17 @@ public class SettingsFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                // Get the selected values from the Spinners
+                String selectedBoardSize = boardSizeSpinner.getSelectedItem().toString();
+                String selectedWinCondition = winConditionSpinner.getSelectedItem().toString();
+                String selectedPlayerMarker = playerMarkersSpinner.getSelectedItem().toString();
+
+                // Pass the selected settings values back to the menu fragment
                 MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
+
+
+                // Navigate back to the menu fragment
                 viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
             }
         });
