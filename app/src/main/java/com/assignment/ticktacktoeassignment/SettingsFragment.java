@@ -1,14 +1,14 @@
 package com.assignment.ticktacktoeassignment;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Spinner;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,22 +74,17 @@ public class SettingsFragment extends Fragment {
         populateWinConditionSpinner();
         populatePlayerMarkersSpinner();
         Button saveButton = view.findViewById(R.id.button);
+        saveButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
+                viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+            }
+        });
 
         return view;
     }
-
-    saveButton.setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v) {
-            // Call a method to save the settings here
-            saveSettings();
-
-            // Navigate back to the menu fragment
-            MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
-            viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
-        }
-    });
 
     private void populateBoardSizeSpinner() {
         String[] boardSizeOptions = {"3x3", "4x4", "5x5"};
@@ -107,7 +102,7 @@ public class SettingsFragment extends Fragment {
 
     private void populatePlayerMarkersSpinner()
     {
-        String[] playerMarkerOptions = {"X", "O",}; //will implement custom a further date
+        String[] playerMarkerOptions = {"X", "O",};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, playerMarkerOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerMarkersSpinner.setAdapter(adapter);
@@ -115,17 +110,10 @@ public class SettingsFragment extends Fragment {
 
     private void saveSettings()
     {
-        // Get the selected values from the Spinners
         String boardSize = boardSizeSpinner.getSelectedItem().toString();
         String winCondition = winConditionSpinner.getSelectedItem().toString();
         String playerMarker = playerMarkersSpinner.getSelectedItem().toString();
 
-        // Save the settings using SharedPreferences
-        SharedPreferences preferences = requireContext().getSharedPreferences("GameSettings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("boardSize", boardSize);
-        editor.putString("winCondition", winCondition);
-        editor.putString("playerMarker", playerMarker);
-        editor.apply();
+
     }
 }
