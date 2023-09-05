@@ -233,7 +233,7 @@ public class GameScreenFragment extends Fragment {
      * Helper function for making sure we don't try and access outside the board array
      * @param x
      * @param y
-     * @return
+     * @return true if [x, y] is in bounds, or false otherwise
      */
     private boolean inBounds(int x, int y) { return x >= 0 && x < boardSize && y >= 0 && y < boardSize; }
 }
