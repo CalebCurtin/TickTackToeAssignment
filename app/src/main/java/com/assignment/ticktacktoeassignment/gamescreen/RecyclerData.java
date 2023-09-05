@@ -3,18 +3,19 @@ package com.assignment.ticktacktoeassignment.gamescreen;
 import android.util.Log;
 
 public class RecyclerData {
-    private int imageID;
+    public int imageID;
+    public int x;
+    public int y;
+    private GameScreenFragment parent;
 
-    public int getImageID() {
-        Log.println(Log.INFO, "TTT", "Got an imageID");
-        return imageID;
+    public RecyclerData(int imageID, int x, int y, GameScreenFragment parent) {
+        this.imageID = imageID;
+        this.x = x;
+        this.y = y;
+        this.parent = parent;
     }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
-    }
-
-    public RecyclerData(int imageID) {
-        this.imageID = imageID;
+    public void onClick() {
+        parent.checkWin(x, y);
     }
 }

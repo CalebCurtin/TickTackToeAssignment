@@ -1,6 +1,7 @@
 package com.assignment.ticktacktoeassignment.gamescreen;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
     private ArrayList<RecyclerData> imageList;
+    private GameScreenFragment gameFrag;
 
-    public RecyclerViewAdapter(ArrayList<RecyclerData> recyclerDataArrayList) {
+    public RecyclerViewAdapter(ArrayList<RecyclerData> recyclerDataArrayList, GameScreenFragment gameFrag) {
         this.imageList = recyclerDataArrayList;
+        this.gameFrag = gameFrag; // There is probably a better way to do this, but I cant think of it right now
     }
 
     @NonNull
@@ -32,7 +35,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         // Set the data to textview and imageview.
         RecyclerData recyclerData = imageList.get(position);
-        holder.imageView.setImageResource(recyclerData.getImageID());
+        holder.x = recyclerData.x;
+        holder.y = recyclerData.y;
+        holder.imageView.setImageResource(recyclerData.imageID);
     }
 
     @Override
@@ -43,7 +48,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // View Holder Class to handle Recycler View.
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
+        private final ImageView imageView;
+        public int x;
+        public int y;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View view) {
                     imageView.setAlpha(1.0f);
+                    gameFrag.placeToken(x, y, imageView);
+                    gameFrag.checkWin(x, y);
                 }
             });
         }

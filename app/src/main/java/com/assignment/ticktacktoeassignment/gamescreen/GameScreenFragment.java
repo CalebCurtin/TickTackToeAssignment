@@ -32,7 +32,8 @@ public class GameScreenFragment extends Fragment {
 
     // Game Params
     private boolean player1 = true;
-    private int boardSize = 5; // <-- This should be changeable from the settings panel
+    private int boardSize = 3; // <-- This should be changeable from the settings panel
+    private int goalSize = 3; // <-- This should be changeable from the settings panel
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
 
@@ -76,7 +77,6 @@ public class GameScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_screen_new, container, false);
         board = new int[boardSize][boardSize];
-        moveCount = 0;
 
         //setupListeners(rootView);
         setupRecycler(rootView);
@@ -84,98 +84,84 @@ public class GameScreenFragment extends Fragment {
     }
 
     /**
-     * Adds a click listener to all squares in the grid, which will reveal their image once pressed
-     * @param view
-     */
-    private void setupListeners(View view) {
-        addClickListener(view.findViewById(R.id.imageView_topLeft), 0, 0);
-        addClickListener(view.findViewById(R.id.imageView_topCenter), 0, 1);
-        addClickListener(view.findViewById(R.id.imageView_topRight), 0, 2);
-
-        addClickListener(view.findViewById(R.id.imageView_midLeft), 1, 0);
-        addClickListener(view.findViewById(R.id.imageView_midCenter), 1, 1);
-        addClickListener(view.findViewById(R.id.imageView_midRight), 1, 2);
-
-        addClickListener(view.findViewById(R.id.imageView_botLeft), 2, 0);
-        addClickListener(view.findViewById(R.id.imageView_botCenter), 2, 1);
-        addClickListener(view.findViewById(R.id.imageView_botRight), 2, 2);
-    }
-
-    private void addClickListener(ImageView segment, int x, int y) {
-        segment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (board[x][y] == 0) {
-
-                    // reveal the square and change the marker
-                    segment.setAlpha(1.0f);
-                    if (player1) {
-                        segment.setImageResource(R.drawable.o);
-                        board[x][y] = 1;
-                    } else {
-                        segment.setImageResource(R.drawable.x);
-                        board[x][y] = 2;
-                    }
-
-                    // update variables
-                    player1 = !player1;
-                    moveCount++;
-
-                    // print board state to logcat
-                    String debug = "Board State: \n";
-                    for (int i = 0; i < boardSize; i++) {
-                        for (int j = 0; j < boardSize; j++) {
-                            debug += board[i][j] + " ";
-                        }
-                        debug += "\n";
-                    }
-                    Log.println(Log.INFO, "TTT", debug);
-
-                    // check for winner
-                    int winner = checkWin();
-                    if (winner == 1 || winner == 2) {
-                        Log.println(Log.INFO, "TTT", "Player " + winner + " won");
-                        loadMainMenu();
-                    } else if (winner == 3) {
-                        Log.println(Log.INFO, "TTT", "It was a draw");
-                        loadMainMenu();
-                    }
-                }
-            }
-        });
-    }
-
-    /**
      * Check if a player has won.
      * There is almost certainly a better way to do this
      * @return 0 if no win, 1 if player 1 wins, 2 if player 2 wins
      */
-    private int checkWin() {
-        // Check for a draw
-        if (moveCount >= 9) {
-            return 3;
+    public int checkWin(int posX, int posY) {
+        Log.println(Log.INFO, "santasspy", "Checking for win at " + posX + ", " + posY + " with goal size " + goalSize);
+        int maxChain = 0;
+        int player = board[posX][posY];
+
+        // check vertical line
+        for (int y = posY - goalSize; y < posY + goalSize; y++) {
+            if (inBounds(posX, y) && board[posX][y] == player) {
+                maxChain++;
+                if (maxChain >= goalSize) { break; }
+            } else {
+                maxChain = 0;
+            }
         }
 
-        // check vertical lines
-        for (int x = 0; x < boardSize; x++) {
-            if (board[x][0] != 0 && board[x][1] == board[x][0] && board[x][2] == board[x][0]) {
-                return board[x][0];
-            }
+        if (maxChain >= 3) {
+            return player;
+        } else {
+            maxChain = 0;
         }
 
         // check horizontal lines
-        for (int y = 0; y < boardSize; y++) {
-            if (board[0][y] != 0 && board[1][y] == board[0][y] && board[2][y] == board[0][y]) {
-                return board[0][y];
+        for (int x = posX - goalSize; x < posX + goalSize; x++) {
+            if (inBounds(x, posY) && board[x][posY] == player) {
+                maxChain++;
+                if (maxChain >= goalSize) { break; }
+            } else {
+                maxChain = 0;
             }
         }
 
-        // Check diagonal lines
-        if (board[0][0] != 0 && board[1][1] == board[0][0] && board[2][2] == board[0][0]) {
-            return board[0][0];
+        if (maxChain >= 3) {
+            return player;
+        } else {
+            maxChain = 0;
         }
-        if (board[0][2] != 0 && board[1][1] == board[0][2] && board[2][0] == board[0][2]) {
-            return board[0][2];
+        // Check diagonal lines
+        for (int i = -goalSize; i < goalSize; i++) {
+            int x = posX + i;
+            int y = posY + i;
+            if (inBounds(x, y) && board[x][y] == player) {
+                maxChain++;
+                if (maxChain >= goalSize) { break; }
+            } else {
+                maxChain = 0;
+            }
+        }
+
+        if (maxChain >= 3) {
+            return player;
+        } else {
+            maxChain = 0;
+        }
+
+        for (int i = -goalSize; i < goalSize; i++) {
+            int x = posX - i;
+            int y = posY + i;
+            if (inBounds(x, y) && board[x][y] == player) {
+                maxChain++;
+                if (maxChain >= goalSize) { break; }
+            } else {
+                maxChain = 0;
+            }
+        }
+
+        if (maxChain >= 3) {
+            return player;
+        } else {
+            maxChain = 0;
+        }
+
+        // Check for a draw
+        if (moveCount >= boardSize * boardSize) {
+            return 3;
         }
 
         return 0;
@@ -191,13 +177,63 @@ public class GameScreenFragment extends Fragment {
         ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
 
         for (int i = 0; i < boardSize * boardSize; i++) {
-            recyclerDataArrayList.add(new RecyclerData(R.drawable.x));
+            recyclerDataArrayList.add(new RecyclerData(R.drawable.x, i % boardSize, i / boardSize, this));
         }
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList, this);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), boardSize);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+    /**
+     * Updates the board and changes the image as required.
+     * This is probably bad practice and should be handled within the click listener of the ImageView,
+     *  but this seems to co-ordinate them all better so until told otherwise this seems to work
+     * @param x
+     * @param y
+     * @param imageView
+     */
+    public void placeToken(int x, int y, ImageView imageView) {
+        if (inBounds(x, y) && board[x][y] == 0) {
+            if (player1) {
+                imageView.setImageResource(R.drawable.o);
+                board[x][y] = 1;
+            } else {
+                imageView.setImageResource(R.drawable.x);
+                board[x][y] = 2;
+            }
+            player1 = !player1;
+
+            // print board state to logcat
+            String debug = "Board State: \n";
+            for (int i = 0; i < boardSize; i++) {
+                for (int j = 0; j < boardSize; j++) {
+                    debug += board[j][i] + " ";
+                }
+                debug += "\n";
+            }
+            Log.println(Log.INFO, "TTT", debug);
+
+            // check for winner
+            moveCount++;
+            int winner = checkWin(x, y);
+            if (winner == 1 || winner == 2) {
+                Log.println(Log.INFO, "TTT", "Player " + winner + " won");
+                loadMainMenu();
+            } else if (winner == 3) {
+                Log.println(Log.INFO, "TTT", "It was a draw");
+                loadMainMenu();
+            }
+        }
+    }
+
+    /**
+     * Helper function for making sure we don't try and access outside the board array
+     * @param x
+     * @param y
+     * @return
+     */
+    private boolean inBounds(int x, int y) { return x >= 0 && x < boardSize && y >= 0 && y < boardSize; }
 }
