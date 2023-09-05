@@ -1,10 +1,11 @@
-package com.assignment.ticktacktoeassignment;
+package com.assignment.ticktacktoeassignment.gamescreen;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.util.logging.Logger;
+import com.assignment.ticktacktoeassignment.MainActivityData;
+import com.assignment.ticktacktoeassignment.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +32,7 @@ public class GameScreenFragment extends Fragment {
 
     // Game Params
     private boolean player1 = true;
-    private int boardSize = 3; // <-- This should be changeable from the settings panel
+    private int boardSize = 5; // <-- This should be changeable from the settings panel
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
 
@@ -70,11 +74,12 @@ public class GameScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_game_screen_new, container, false);
         board = new int[boardSize][boardSize];
         moveCount = 0;
 
-        setupListeners(rootView);
+        //setupListeners(rootView);
+        setupRecycler(rootView);
         return rootView;
     }
 
@@ -179,5 +184,20 @@ public class GameScreenFragment extends Fragment {
     private void loadMainMenu() {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+    }
+
+    private void setupRecycler(View rootView) {
+        RecyclerView recyclerView = rootView.findViewById(R.id.gameRecyclerView);
+        ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
+
+        for (int i = 0; i < boardSize * boardSize; i++) {
+            recyclerDataArrayList.add(new RecyclerData(R.drawable.x));
+        }
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), boardSize);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 }
