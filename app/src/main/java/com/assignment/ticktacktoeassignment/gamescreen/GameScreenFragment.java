@@ -77,6 +77,7 @@ public class GameScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_screen_new, container, false);
         board = new int[boardSize][boardSize];
+        moveCount = 0;
 
         //setupListeners(rootView);
         setupRecycler(rootView);
