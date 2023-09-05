@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.assignment.ticktacktoeassignment.R;
@@ -17,10 +18,14 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
     private ArrayList<RecyclerData> imageList;
     private GameScreenFragment gameFrag;
+    private int gridSize;
+    private GridLayoutManager gridLayoutManager;
 
-    public RecyclerViewAdapter(ArrayList<RecyclerData> recyclerDataArrayList, GameScreenFragment gameFrag) {
+    public RecyclerViewAdapter(ArrayList<RecyclerData> recyclerDataArrayList, GameScreenFragment gameFrag, GridLayoutManager gridLayoutManager) {
         this.imageList = recyclerDataArrayList;
         this.gameFrag = gameFrag; // There is probably a better way to do this, but I cant think of it right now
+        this.gridSize = gridLayoutManager.getWidth() / gridLayoutManager.getSpanCount();
+        this.gridLayoutManager = gridLayoutManager;
     }
 
     @NonNull
@@ -28,16 +33,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate Layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_card, parent, false);
+        this.gridSize = gridLayoutManager.getWidth() / gridLayoutManager.getSpanCount();
         return new RecyclerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        // Set the data to textview and imageview.
+        // Set the data to the imageview.
         RecyclerData recyclerData = imageList.get(position);
         holder.x = recyclerData.x;
         holder.y = recyclerData.y;
         holder.imageView.setImageResource(recyclerData.imageID);
+
+        // Work out how large the images should be based on the width of the screen
+        Log.println(Log.INFO, "santasspy", "gridSquareWidth: " + gridSize);
+        ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
+        layoutParams.width = gridSize;
+        layoutParams.height = gridSize;
+        holder.imageView.setLayoutParams(layoutParams);
     }
 
     @Override

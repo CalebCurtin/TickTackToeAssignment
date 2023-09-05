@@ -32,8 +32,8 @@ public class GameScreenFragment extends Fragment {
 
     // Game Params
     private boolean player1 = true;
-    private int boardSize = 3; // <-- This should be changeable from the settings panel
-    private int goalSize = 3; // <-- This should be changeable from the settings panel
+    private int boardSize = 5; // <-- This should be changeable from the settings panel
+    private int goalSize = 5; // <-- This should be changeable from the settings panel
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
 
@@ -75,7 +75,7 @@ public class GameScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_game_screen_new, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
         board = new int[boardSize][boardSize];
         moveCount = 0;
 
@@ -181,8 +181,8 @@ public class GameScreenFragment extends Fragment {
             recyclerDataArrayList.add(new RecyclerData(R.drawable.x, i % boardSize, i / boardSize, this));
         }
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList, this);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), boardSize);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList, this, layoutManager);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

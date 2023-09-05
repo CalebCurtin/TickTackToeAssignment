@@ -2,133 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".gamescreen.GameScreenFragment">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vert_left"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gameRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".33" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vert_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".66" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_hor_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".33" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_hor_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".66" />
-
-    <ImageView
-        android:id="@+id/imageView_topLeft"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_hor_left"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vert_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_topCenter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_hor_left"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vert_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vert_left"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_topRight"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_hor_left"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vert_right"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_midLeft"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_hor_right"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vert_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_hor_left"
-        android:src="@drawable/x"
-        android:alpha="0"/>
-
-    <ImageView
-        android:id="@+id/imageView_midCenter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_hor_right"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vert_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vert_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_hor_left"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_midRight"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_hor_right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vert_right"
-        app:layout_constraintTop_toTopOf="@+id/guideline_hor_left"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_botLeft"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vert_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_hor_right"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_botCenter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vert_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vert_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_hor_right"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
-    <ImageView
-        android:id="@+id/imageView_botRight"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vert_right"
-        app:layout_constraintTop_toTopOf="@+id/guideline_hor_right"
-        android:src="@drawable/x"
-        android:alpha="0" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
