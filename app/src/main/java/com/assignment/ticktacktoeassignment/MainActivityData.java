@@ -6,18 +6,19 @@ import androidx.lifecycle.ViewModel;
 
 public class MainActivityData extends ViewModel {
     public MutableLiveData<Fragments> clickedValue;
-    public MutableLiveData<Boolean> textSet;
+    public int boardSize = 3;
+    public int winCondition = 3;
+    public boolean xOnPlayer1 = true; // true if player 1 starts with X, false if player 1 starts with O
 
-    public MainActivityData(){
+    public MainActivityData() {
         clickedValue = new MediatorLiveData<Fragments>();
         clickedValue.setValue(Fragments.MENU_FRAGMENT);
-
     }
 
-    public Fragments getClickedValue(){
+    public Fragments getCurrentFragment(){
         return clickedValue.getValue();
     }
-    public void setClickedValue(Fragments value){
+    public void changeFragment(Fragments value){
         clickedValue.setValue(value);
     }
 

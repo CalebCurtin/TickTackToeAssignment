@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityDataViewModel.clickedValue.observe(this, new Observer<MainActivityData.Fragments>() {
             @Override
             public void onChanged(MainActivityData.Fragments clickedValue) {
-                switch (mainActivityDataViewModel.getClickedValue()) {
+                switch (mainActivityDataViewModel.getCurrentFragment()) {
                     case MENU_FRAGMENT:
                         loadMenuScreen();
                         break;

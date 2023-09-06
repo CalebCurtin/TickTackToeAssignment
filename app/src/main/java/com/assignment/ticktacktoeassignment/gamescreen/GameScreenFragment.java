@@ -31,9 +31,9 @@ public class GameScreenFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // Game Params
-    private boolean player1 = true;
-    private int boardSize = 5; // <-- This should be changeable from the settings panel
-    private int goalSize = 5; // <-- This should be changeable from the settings panel
+    private boolean player1 = true; // fallback default
+    private int boardSize = 3;      // fallback default
+    private int goalSize = 3;       // fallback default
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
 
@@ -76,6 +76,11 @@ public class GameScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        boardSize = mainActivityDataViewModel.boardSize;
+        goalSize = mainActivityDataViewModel.winCondition;
+        player1 = mainActivityDataViewModel.xOnPlayer1;
+
         board = new int[boardSize][boardSize];
         moveCount = 0;
 
@@ -170,7 +175,7 @@ public class GameScreenFragment extends Fragment {
 
     private void loadMainMenu() {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
-        mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+        mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
     }
 
     private void setupRecycler(View rootView) {
@@ -199,10 +204,10 @@ public class GameScreenFragment extends Fragment {
     public void placeToken(int x, int y, ImageView imageView) {
         if (inBounds(x, y) && board[x][y] == 0) {
             if (player1) {
-                imageView.setImageResource(R.drawable.o);
+                imageView.setImageResource(R.drawable.x);
                 board[x][y] = 1;
             } else {
-                imageView.setImageResource(R.drawable.x);
+                imageView.setImageResource(R.drawable.o);
                 board[x][y] = 2;
             }
             player1 = !player1;

@@ -78,17 +78,14 @@ public class SettingsFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                // Get the selected values from the Spinners
-                String selectedBoardSize = boardSizeSpinner.getSelectedItem().toString();
-                String selectedWinCondition = winConditionSpinner.getSelectedItem().toString();
-                String selectedPlayerMarker = playerMarkersSpinner.getSelectedItem().toString();
-
-                // Pass the selected settings values back to the menu fragment
+                // Get the view model
                 MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
 
+                // Get the values from the spinners and pass to the viewModel
+                saveSettings(viewModel);
 
                 // Navigate back to the menu fragment
-                viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+                viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
             }
         });
 
@@ -117,12 +114,29 @@ public class SettingsFragment extends Fragment {
         playerMarkersSpinner.setAdapter(adapter);
     }
 
-    private void saveSettings()
+    private void saveSettings(MainActivityData mainActivityData)
     {
         String boardSize = boardSizeSpinner.getSelectedItem().toString();
         String winCondition = winConditionSpinner.getSelectedItem().toString();
         String playerMarker = playerMarkersSpinner.getSelectedItem().toString();
 
+        int board = parseBoardSize(boardSize);
+        int winCon = parseWinCon(winCondition);
+        boolean player = parsePlayerMarker(playerMarker);
+        mainActivityData.boardSize = board;
+        mainActivityData.winCondition = winCon;
+        mainActivityData.xOnPlayer1 = player;
+    }
 
+    private int parseBoardSize(String boardText) {
+        return boardText.charAt(0) - '0'; // Convert the first character to an int
+    }
+
+    private int parseWinCon(String winCon) {
+        return winCon.charAt(0) - '0'; // Convert the first character to an int
+    }
+
+    private boolean parsePlayerMarker(String playerMarker) {
+        return (playerMarker.equals("x") || playerMarker.equals("X")); // return true if they selected X
     }
 }

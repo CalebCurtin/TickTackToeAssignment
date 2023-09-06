@@ -90,7 +90,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
-                viewModel.setClickedValue(MainActivityData.Fragments.MENU_FRAGMENT);
+                viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
             }
         });
 

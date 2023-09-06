@@ -79,21 +79,21 @@ public class MenuFragment extends Fragment {
         gameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.GAME_FRAGMENT);
+                mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.SETTINGS_FRAGMENT);
+                mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.SETTINGS_FRAGMENT);
             }
         });
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivityDataViewModel.setClickedValue(MainActivityData.Fragments.PROFILE_FRAGMENT);
+                mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.PROFILE_FRAGMENT);
             }
         });
     }

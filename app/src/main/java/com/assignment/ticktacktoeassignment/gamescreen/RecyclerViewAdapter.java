@@ -24,7 +24,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(ArrayList<RecyclerData> recyclerDataArrayList, GameScreenFragment gameFrag, GridLayoutManager gridLayoutManager) {
         this.imageList = recyclerDataArrayList;
         this.gameFrag = gameFrag; // There is probably a better way to do this, but I cant think of it right now
-        this.gridSize = gridLayoutManager.getWidth() / gridLayoutManager.getSpanCount();
         this.gridLayoutManager = gridLayoutManager;
     }
 
@@ -50,6 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
         layoutParams.width = gridSize;
         layoutParams.height = gridSize;
+
         holder.imageView.setLayoutParams(layoutParams);
     }
 
@@ -68,10 +68,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.gameImageViewCard);
+            imageView.setImageAlpha(0);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    imageView.setAlpha(1.0f);
+                    imageView.setImageAlpha(255);
                     gameFrag.placeToken(x, y, imageView);
                     gameFrag.checkWin(x, y);
                 }
