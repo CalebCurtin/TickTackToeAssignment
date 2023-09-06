@@ -3,13 +3,20 @@ package com.assignment.ticktacktoeassignment;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Button;
-import android.widget.ViewFlipper;
+import android.widget.EditText;
+
+
+import com.assignment.ticktacktoeassignment.gamescreen.RecyclerData;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,10 +35,11 @@ public class UserProfileFragment extends Fragment {
     private String mParam2;
 
     private Button right_btn;
-    private ViewFlipper viewFlipper;
     private Button left_btn;
     private Button profile_backBtn;
     private EditText profile_editText;
+
+    private RecyclerView rv;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -68,33 +76,46 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
-        viewFlipper = view.findViewById(R.id.viewFlipper);
         profile_editText = view.findViewById(R.id.profile_editText);
-        right_btn = view.findViewById(R.id.right_btn);
-        left_btn = view.findViewById(R.id.left_btn);
         profile_backBtn = view.findViewById(R.id.profile_backBtn);
 
-        right_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewFlipper.showNext();
-            }
-        });
-        left_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewFlipper.showPrevious();
-            }
-        });
+
+        ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
+        RecyclerView rv = view.findViewById(R.id.avatarRecView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+
+        rv.setLayoutManager(gridLayoutManager);
+
+        // Create a list of AvatarData objects
+        ArrayList<AvatarData> avatarDataList = generateAvatarDataList();
+
+        // Create and set the adapter for the RecyclerView
+        AvatarRecyclerViewAdapter adapter = new AvatarRecyclerViewAdapter(avatarDataList);
+        rv.setAdapter(adapter);
+
+
         profile_backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
                 viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
             }
+
         });
-
-
         return view;
+    }
+
+    private ArrayList<AvatarData> generateAvatarDataList() {
+        ArrayList<AvatarData> avatarDataList = new ArrayList<>();
+        avatarDataList.add(new AvatarData("koala"));
+        avatarDataList.add(new AvatarData("dog"));
+        avatarDataList.add(new AvatarData("cat"));
+        avatarDataList.add(new AvatarData("pufferfish"));
+        avatarDataList.add(new AvatarData("shark"));
+        avatarDataList.add(new AvatarData("lion"));
+        avatarDataList.add(new AvatarData("bear"));
+        avatarDataList.add(new AvatarData("panda"));
+        avatarDataList.add(new AvatarData("rabbit"));
+        return avatarDataList;
     }
 }
