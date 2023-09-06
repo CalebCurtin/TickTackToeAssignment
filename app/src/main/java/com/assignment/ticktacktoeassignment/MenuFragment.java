@@ -67,14 +67,14 @@ public class MenuFragment extends Fragment {
         Button gameButton = rootView.findViewById(R.id.startButton);
         Button settingsButton = rootView.findViewById(R.id.settingsButton);
         Button profileButton = rootView.findViewById(R.id.profileButton);
-
+        Button StatsButton = rootView.findViewById(R.id.statsButton);
         // Setup button listeners
-        setupListeners(gameButton, settingsButton, profileButton);
+        setupListeners(gameButton, settingsButton, profileButton,StatsButton);
 
         return rootView;
     }
 
-    private void setupListeners(Button gameButton, Button settingsButton, Button profileButton) {
+    private void setupListeners(Button gameButton, Button settingsButton, Button profileButton, Button StatsButton) {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         gameButton.setOnClickListener(new View.OnClickListener() {
             @Override

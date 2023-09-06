@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuFragment menuFragment = new MenuFragment();
     private GameScreenFragment gameScreenFragment = new GameScreenFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
+    private StatsFragment statsFragment = new StatsFragment();
     private UserProfileFragment userProfileFragment = new UserProfileFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case PROFILE_FRAGMENT:
                         loadProfileScreen();
+                        break;
+                    case STATS_FRAGMENT:
                         break;
                 }
             }

@@ -111,7 +111,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline13" />
 
     <TextView
-        android:id="@+id/Player2Wins"
+        android:id="@+id/Player2TWins"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
