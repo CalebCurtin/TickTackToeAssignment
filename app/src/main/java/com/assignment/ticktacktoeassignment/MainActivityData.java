@@ -10,6 +10,8 @@ public class MainActivityData extends ViewModel {
     public int winCondition = 3;
     public boolean xOnPlayer1 = true; // true if player 1 starts with X, false if player 1 starts with O
 
+    public int selectedAvatarImage=0;
+
     public MainActivityData() {
         clickedValue = new MediatorLiveData<Fragments>();
         clickedValue.setValue(Fragments.MENU_FRAGMENT);

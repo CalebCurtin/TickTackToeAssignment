@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
@@ -14,8 +17,11 @@ public class AvatarRecyclerViewAdapter extends RecyclerView.Adapter<AvatarRecycl
 
     private ArrayList<AvatarData> avatarData;
 
-    public AvatarRecyclerViewAdapter(ArrayList<AvatarData> avatarData) {
+    private MainActivityData viewModel;
+
+    public AvatarRecyclerViewAdapter(ArrayList<AvatarData> avatarData, MainActivityData viewModel) {
         this.avatarData = avatarData;
+        this.viewModel = viewModel;
     }
 
     @NonNull
@@ -38,7 +44,19 @@ public class AvatarRecyclerViewAdapter extends RecyclerView.Adapter<AvatarRecycl
         } else {
             Log.e("AvatarRecyclerViewAdapter", "Image file not found for: " + avatar.getImageId());
         }
+        holder.avatarImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = "You have selected the " + avatar.getImageId() + " avatar.";
+                Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+
+                viewModel.selectedAvatarImage = imageResourceId;
+            }
+        });
     }
+
+
+
     @Override
     public int getItemCount() {
         return avatarData.size();

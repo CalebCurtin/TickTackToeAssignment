@@ -53,6 +53,8 @@ public class GameScreenFragment extends Fragment {
     private Button resetButton;
     private View rootView;
 
+    private ImageView playerAvatar;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -102,15 +104,19 @@ public class GameScreenFragment extends Fragment {
         // Get all the components
         infoText = rootView.findViewById(R.id.gameScreenText);
         playerIndicator = rootView.findViewById(R.id.gameScreenPlayerIndicatorImage);
+        playerAvatar = rootView.findViewById(R.id.gameScreenPlayerAvatar);
         rematchButton = rootView.findViewById(R.id.gameScreenRematchButton);
         homeButton = rootView.findViewById(R.id.gameScreenHomeButton);
         menuButton = rootView.findViewById(R.id.gameScreenMenuButton);
         undoButton = rootView.findViewById(R.id.gameScreenUndoButton);
         resetButton = rootView.findViewById(R.id.gameScreenResetButton);
         settingsButton = rootView.findViewById(R.id.gameScreenSettingsButton);
+        setPlayerAvatar();
+
 
         // Give the buttons functionality
         buildButtons();
+
 
         // Setup the game
         restartGame();
@@ -320,6 +326,15 @@ public class GameScreenFragment extends Fragment {
             playerIndicator.setImageResource(R.drawable.x);
         } else {
             playerIndicator.setImageResource(R.drawable.o);
+        }
+    }
+
+    private void setPlayerAvatar() {
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        if (mainActivityDataViewModel.selectedAvatarImage != 0) {
+            playerAvatar.setImageResource(mainActivityDataViewModel.selectedAvatarImage);
+        } else {
+            playerAvatar.setImageResource(R.drawable.defaultuser);
         }
     }
 

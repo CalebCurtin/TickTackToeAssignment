@@ -202,4 +202,14 @@
         app:layout_constraintTop_toTopOf="@+id/guideline15"
         app:layout_constraintVertical_bias="0.787" />
 
+    <ImageView
+        android:id="@+id/gameScreenPlayerAvatar"
+        android:layout_width="38dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/gameScreenText"
+        app:layout_constraintEnd_toStartOf="@+id/gameScreenText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gameScreenText"
+        tools:srcCompat="@tools:sample/avatars" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

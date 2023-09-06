@@ -29,13 +29,12 @@ public class UserProfileFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private MainActivityData viewModel;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private Button right_btn;
-    private Button left_btn;
     private Button profile_backBtn;
     private EditText profile_editText;
 
@@ -79,6 +78,7 @@ public class UserProfileFragment extends Fragment {
         profile_editText = view.findViewById(R.id.profile_editText);
         profile_backBtn = view.findViewById(R.id.profile_backBtn);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
 
         ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
         RecyclerView rv = view.findViewById(R.id.avatarRecView);
@@ -86,11 +86,9 @@ public class UserProfileFragment extends Fragment {
 
         rv.setLayoutManager(gridLayoutManager);
 
-        // Create a list of AvatarData objects
         ArrayList<AvatarData> avatarDataList = generateAvatarDataList();
 
-        // Create and set the adapter for the RecyclerView
-        AvatarRecyclerViewAdapter adapter = new AvatarRecyclerViewAdapter(avatarDataList);
+        AvatarRecyclerViewAdapter adapter = new AvatarRecyclerViewAdapter(avatarDataList, viewModel);
         rv.setAdapter(adapter);
 
 
