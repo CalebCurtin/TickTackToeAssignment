@@ -45,6 +45,10 @@ public class GameScreenFragment extends Fragment {
     private ImageView playerIndicator;
     private Button rematchButton;
     private Button homeButton;
+    private Button menuButton;
+    private Button settingsButton;
+    private Button undoButton;
+    private Button resetButton;
     private View rootView;
 
     // TODO: Rename and change types of parameters
@@ -98,6 +102,13 @@ public class GameScreenFragment extends Fragment {
         playerIndicator = rootView.findViewById(R.id.gameScreenPlayerIndicatorImage);
         rematchButton = rootView.findViewById(R.id.gameScreenRematchButton);
         homeButton = rootView.findViewById(R.id.gameScreenHomeButton);
+        menuButton = rootView.findViewById(R.id.gameScreenMenuButton);
+        undoButton = rootView.findViewById(R.id.gameScreenUndoButton);
+        resetButton = rootView.findViewById(R.id.gameScreenResetButton);
+        settingsButton = rootView.findViewById(R.id.gameScreenSettingsButton);
+
+        // Give the buttons functionality
+        buildButtons();
 
         // Setup the game
         board = new int[boardSize][boardSize];
@@ -197,11 +208,6 @@ public class GameScreenFragment extends Fragment {
         return 0;
     }
 
-    private void loadMainMenu() {
-        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
-        mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
-    }
-
     private void setupRecycler(View rootView) {
         RecyclerView recyclerView = rootView.findViewById(R.id.gameRecyclerView);
         ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
@@ -290,20 +296,6 @@ public class GameScreenFragment extends Fragment {
     private void showButtons() {
         rematchButton.setVisibility(View.VISIBLE);
         homeButton.setVisibility(View.VISIBLE);
-
-        rematchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                restartGame();
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadMainMenu();
-            }
-        });
     }
 
     private void restartGame() {
@@ -316,5 +308,45 @@ public class GameScreenFragment extends Fragment {
         moveCount = 0;
         setupRecycler(rootView); // TODO: There should be a better way to do this
         gameActive = true;
+
+        if (placeAnX) {
+            playerIndicator.setImageResource(R.drawable.x);
+        } else {
+            playerIndicator.setImageResource(R.drawable.o);
+        }
+    }
+
+    private void buildButtons() {
+        menuButton.setOnClickListener(new ChangeScreenOnClickListener(MainActivityData.Fragments.MENU_FRAGMENT));
+        settingsButton.setOnClickListener(new ChangeScreenOnClickListener(MainActivityData.Fragments.SETTINGS_FRAGMENT));
+        homeButton.setOnClickListener(new ChangeScreenOnClickListener(MainActivityData.Fragments.MENU_FRAGMENT));
+        rematchButton.setOnClickListener(new ResetGameOnClickListener());
+        resetButton.setOnClickListener(new ResetGameOnClickListener());
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: undo move here
+            }
+        });
+    }
+
+    private class ChangeScreenOnClickListener implements View.OnClickListener {
+        private final MainActivityData.Fragments targetScreen;
+
+        public ChangeScreenOnClickListener(MainActivityData.Fragments targetScreen) {
+            this.targetScreen = targetScreen;
+        }
+        @Override
+        public void onClick(View view) {
+            MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+            mainActivityDataViewModel.changeFragment(targetScreen);
+        }
+    }
+
+    private class ResetGameOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            restartGame();
+        }
     }
 }

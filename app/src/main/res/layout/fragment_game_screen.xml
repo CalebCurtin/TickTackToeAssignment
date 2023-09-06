@@ -144,7 +144,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <Button
-        android:id="@+id/MenuButton"
+        android:id="@+id/gameScreenMenuButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Menu"
@@ -154,7 +154,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/SettingsButton"
+        android:id="@+id/gameScreenSettingsButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Settings"
@@ -171,7 +171,7 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <Button
-        android:id="@+id/UndoButton"
+        android:id="@+id/gameScreenUndoButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Undo"
@@ -181,12 +181,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/ResetButton"
+        android:id="@+id/gameScreenResetButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Reset"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/SettingsButton"
+        app:layout_constraintEnd_toStartOf="@+id/gameScreenSettingsButton"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="parent" />
 
