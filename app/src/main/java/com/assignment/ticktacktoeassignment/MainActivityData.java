@@ -30,6 +30,5 @@ public class MainActivityData extends ViewModel {
         PROFILE_FRAGMENT,
         STATS_FRAGMENT,
         MENU_FRAGMENT;
-
     }
 }
