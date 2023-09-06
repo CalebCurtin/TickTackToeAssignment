@@ -67,14 +67,14 @@ public class MenuFragment extends Fragment {
         Button gameButton = rootView.findViewById(R.id.startButton);
         Button settingsButton = rootView.findViewById(R.id.settingsButton);
         Button profileButton = rootView.findViewById(R.id.profileButton);
-        Button StatsButton = rootView.findViewById(R.id.statsButton);
+        Button statsButton = rootView.findViewById(R.id.statsButton);
         // Setup button listeners
-        setupListeners(gameButton, settingsButton, profileButton,StatsButton);
+        setupListeners(gameButton, settingsButton, profileButton, statsButton);
 
         return rootView;
     }
 
-    private void setupListeners(Button gameButton, Button settingsButton, Button profileButton, Button StatsButton) {
+    private void setupListeners(Button gameButton, Button settingsButton, Button profileButton, Button statsButton) {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         gameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +94,13 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.PROFILE_FRAGMENT);
+            }
+        });
+
+        statsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.STATS_FRAGMENT);
             }
         });
     }

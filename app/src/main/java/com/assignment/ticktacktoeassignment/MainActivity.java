@@ -79,6 +79,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void loadStatsScreen() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
+
+        View mainMenuContainer = findViewById(R.id.mainMenu_Container);
+        if (frag == null) {
+            fm.beginTransaction().add(R.id.mainMenu_Container, statsFragment).commit();
+        } else {
+            fm.beginTransaction().replace(R.id.mainMenu_Container, statsFragment).commit();
+        }
+    }
+
     private void setupFragmentSwapper(MainActivityData mainActivityDataViewModel) {
         mainActivityDataViewModel.clickedValue.observe(this, new Observer<MainActivityData.Fragments>() {
             @Override
@@ -97,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         loadProfileScreen();
                         break;
                     case STATS_FRAGMENT:
+                        loadStatsScreen();
                         break;
                 }
             }
