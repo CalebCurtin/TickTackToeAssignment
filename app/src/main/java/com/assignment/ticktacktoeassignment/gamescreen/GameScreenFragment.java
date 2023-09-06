@@ -40,6 +40,8 @@ public class GameScreenFragment extends Fragment {
     private int goalSize = 3;       // fallback default
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
+    private int[] lastMove = new int[2];
+    private ImageView lastImageClicked = null;
 
     private TextView infoText;
     private ImageView playerIndicator;
@@ -111,18 +113,7 @@ public class GameScreenFragment extends Fragment {
         buildButtons();
 
         // Setup the game
-        board = new int[boardSize][boardSize];
-        moveCount = 0;
-        placeAnX = startPlayerIsX;
-        gameActive = true;
-
-        // Build the game view
-        setupRecycler(rootView);
-
-        // if player 1 is using O's we need to change the initial view for the player indicator
-        if (!placeAnX) {
-            playerIndicator.setImageResource(R.drawable.o);
-        }
+        restartGame();
         return rootView;
     }
 
@@ -234,15 +225,18 @@ public class GameScreenFragment extends Fragment {
     public boolean placeToken(int x, int y, ImageView imageView) {
         boolean placedSomething = false;
         if (gameActive && inBounds(x, y) && board[x][y] == 0) {
+            // Save some params for undo
             placedSomething = true;
-            // Place a marker at the clicked location and update the string
+            lastMove[0] = x;
+            lastMove[1] = y;
+            lastImageClicked = imageView;
+
+            // Place a marker at the clicked location
             if (placeAnX) {
                 imageView.setImageResource(R.drawable.x);
-                playerIndicator.setImageResource(R.drawable.o);
                 board[x][y] = 1;
             } else {
                 imageView.setImageResource(R.drawable.o);
-                playerIndicator.setImageResource(R.drawable.x);
                 board[x][y] = 2;
             }
 
@@ -268,7 +262,7 @@ public class GameScreenFragment extends Fragment {
                 playerIndicator.setVisibility(View.GONE);
                 showButtons();
             } else {
-                infoText.setText("Player " + (moveCount%2 + 1) + "'s Turn");
+                updatePlayerIndicator();
             }
         }
         return placedSomething;
@@ -307,13 +301,8 @@ public class GameScreenFragment extends Fragment {
         placeAnX = startPlayerIsX;
         moveCount = 0;
         setupRecycler(rootView); // TODO: There should be a better way to do this
+        updatePlayerIndicator();
         gameActive = true;
-
-        if (placeAnX) {
-            playerIndicator.setImageResource(R.drawable.x);
-        } else {
-            playerIndicator.setImageResource(R.drawable.o);
-        }
     }
 
     private void buildButtons() {
@@ -322,12 +311,16 @@ public class GameScreenFragment extends Fragment {
         homeButton.setOnClickListener(new ChangeScreenOnClickListener(MainActivityData.Fragments.MENU_FRAGMENT));
         rematchButton.setOnClickListener(new ResetGameOnClickListener());
         resetButton.setOnClickListener(new ResetGameOnClickListener());
-        undoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: undo move here
-            }
-        });
+        undoButton.setOnClickListener(new UndoLastMoveOnClickListener());
+    }
+
+    private void updatePlayerIndicator() {
+        infoText.setText("Player " + (moveCount%2 + 1) + "'s Turn");
+        if (placeAnX) {
+            playerIndicator.setImageResource(R.drawable.x);
+        } else {
+            playerIndicator.setImageResource(R.drawable.o);
+        }
     }
 
     private class ChangeScreenOnClickListener implements View.OnClickListener {
@@ -347,6 +340,19 @@ public class GameScreenFragment extends Fragment {
         @Override
         public void onClick(View view) {
             restartGame();
+        }
+    }
+
+    private class UndoLastMoveOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            board[lastMove[0]][lastMove[1]] = 0;
+            if (lastImageClicked != null) {
+                lastImageClicked.setImageAlpha(0);
+                moveCount--;
+                placeAnX = !placeAnX;
+                updatePlayerIndicator();
+            }
         }
     }
 }
