@@ -72,9 +72,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    imageView.setImageAlpha(255);
-                    gameFrag.placeToken(x, y, imageView);
-                    gameFrag.checkWin(x, y);
+                    boolean placed = gameFrag.placeToken(x, y, imageView);
+                    if (placed) {
+                        imageView.setImageAlpha(255);
+                        gameFrag.checkWin(x, y);
+                    }
                 }
             });
         }

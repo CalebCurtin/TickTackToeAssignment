@@ -14,4 +14,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gameScreenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player 1's Turn"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/gameRecyclerView"
+        app:layout_constraintEnd_toStartOf="@id/gameScreenPlayerIndicatorImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/gameScreenHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gameScreenRematchButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameRecyclerView" />
+
+    <Button
+        android:id="@+id/gameScreenRematchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rematch"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/gameScreenHomeButton"
+        app:layout_constraintTop_toBottomOf="@+id/gameRecyclerView" />
+
+    <ImageView
+        android:id="@+id/gameScreenPlayerIndicatorImage"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gameScreenText"
+        app:layout_constraintTop_toTopOf="@+id/gameScreenText"
+        app:srcCompat="@drawable/x" />
 </androidx.constraintlayout.widget.ConstraintLayout>

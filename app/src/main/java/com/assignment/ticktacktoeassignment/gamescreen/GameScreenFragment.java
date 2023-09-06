@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.assignment.ticktacktoeassignment.MainActivityData;
 import com.assignment.ticktacktoeassignment.R;
@@ -31,11 +33,19 @@ public class GameScreenFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // Game Params
-    private boolean player1 = true; // fallback default
+    private boolean placeAnX = true; // fallback default
+    private boolean startPlayerIsX;
+    private boolean gameActive = true;
     private int boardSize = 3;      // fallback default
     private int goalSize = 3;       // fallback default
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
+
+    private TextView infoText;
+    private ImageView playerIndicator;
+    private Button rematchButton;
+    private Button homeButton;
+    private View rootView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -75,17 +85,33 @@ public class GameScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
+        rootView = inflater.inflate(R.layout.fragment_game_screen, container, false);
+
+        // Get data from settings
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         boardSize = mainActivityDataViewModel.boardSize;
         goalSize = mainActivityDataViewModel.winCondition;
-        player1 = mainActivityDataViewModel.xOnPlayer1;
+        startPlayerIsX = mainActivityDataViewModel.xOnPlayer1;
 
+        // Get all the components
+        infoText = rootView.findViewById(R.id.gameScreenText);
+        playerIndicator = rootView.findViewById(R.id.gameScreenPlayerIndicatorImage);
+        rematchButton = rootView.findViewById(R.id.gameScreenRematchButton);
+        homeButton = rootView.findViewById(R.id.gameScreenHomeButton);
+
+        // Setup the game
         board = new int[boardSize][boardSize];
         moveCount = 0;
+        placeAnX = startPlayerIsX;
+        gameActive = true;
 
-        //setupListeners(rootView);
+        // Build the game view
         setupRecycler(rootView);
+
+        // if player 1 is using O's we need to change the initial view for the player indicator
+        if (!placeAnX) {
+            playerIndicator.setImageResource(R.drawable.o);
+        }
         return rootView;
     }
 
@@ -161,8 +187,6 @@ public class GameScreenFragment extends Fragment {
 
         if (maxChain >= 3) {
             return player;
-        } else {
-            maxChain = 0;
         }
 
         // Check for a draw
@@ -201,38 +225,47 @@ public class GameScreenFragment extends Fragment {
      * @param y
      * @param imageView
      */
-    public void placeToken(int x, int y, ImageView imageView) {
-        if (inBounds(x, y) && board[x][y] == 0) {
-            if (player1) {
+    public boolean placeToken(int x, int y, ImageView imageView) {
+        boolean placedSomething = false;
+        if (gameActive && inBounds(x, y) && board[x][y] == 0) {
+            placedSomething = true;
+            // Place a marker at the clicked location and update the string
+            if (placeAnX) {
                 imageView.setImageResource(R.drawable.x);
+                playerIndicator.setImageResource(R.drawable.o);
                 board[x][y] = 1;
             } else {
                 imageView.setImageResource(R.drawable.o);
+                playerIndicator.setImageResource(R.drawable.x);
                 board[x][y] = 2;
             }
-            player1 = !player1;
+
+            // change which players turn it is
+            placeAnX = !placeAnX;
 
             // print board state to logcat
-            String debug = "Board State: \n";
-            for (int i = 0; i < boardSize; i++) {
-                for (int j = 0; j < boardSize; j++) {
-                    debug += board[j][i] + " ";
-                }
-                debug += "\n";
-            }
-            Log.println(Log.INFO, "TTT", debug);
+            logBoardState();
 
-            // check for winner
+            // check for winner and update the info text
             moveCount++;
             int winner = checkWin(x, y);
             if (winner == 1 || winner == 2) {
-                Log.println(Log.INFO, "TTT", "Player " + winner + " won");
-                loadMainMenu();
+                // Someone won
+                infoText.setText("Player " + ((moveCount-1)%2 + 1) + " won!");  // This is incredibly cursed
+                playerIndicator.setVisibility(View.GONE);
+                gameActive = false;
+                showButtons();
             } else if (winner == 3) {
-                Log.println(Log.INFO, "TTT", "It was a draw");
-                loadMainMenu();
+                // Draw
+                gameActive = false;
+                infoText.setText("Draw!");
+                playerIndicator.setVisibility(View.GONE);
+                showButtons();
+            } else {
+                infoText.setText("Player " + (moveCount%2 + 1) + "'s Turn");
             }
         }
+        return placedSomething;
     }
 
     /**
@@ -242,4 +275,46 @@ public class GameScreenFragment extends Fragment {
      * @return true if [x, y] is in bounds, or false otherwise
      */
     private boolean inBounds(int x, int y) { return x >= 0 && x < boardSize && y >= 0 && y < boardSize; }
+
+    private void logBoardState() {
+        String debug = "Board State: \n";
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                debug += board[j][i] + " ";
+            }
+            debug += "\n";
+        }
+        Log.println(Log.INFO, "TTT", debug);
+    }
+
+    private void showButtons() {
+        rematchButton.setVisibility(View.VISIBLE);
+        homeButton.setVisibility(View.VISIBLE);
+
+        rematchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartGame();
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadMainMenu();
+            }
+        });
+    }
+
+    private void restartGame() {
+        infoText.setText("Player 1's Turn");
+        playerIndicator.setVisibility(View.VISIBLE);
+        rematchButton.setVisibility(View.GONE);
+        homeButton.setVisibility(View.GONE);
+        board = new int[boardSize][boardSize];
+        placeAnX = startPlayerIsX;
+        moveCount = 0;
+        setupRecycler(rootView); // TODO: There should be a better way to do this
+        gameActive = true;
+    }
 }
