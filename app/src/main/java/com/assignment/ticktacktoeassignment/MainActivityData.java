@@ -12,6 +12,8 @@ public class MainActivityData extends ViewModel {
 
     public int selectedAvatarImage=0;
 
+    public String playerOneName = ""; //to be implemented in GameScreenFragment, stores player one name
+
     public MainActivityData() {
         clickedValue = new MediatorLiveData<Fragments>();
         clickedValue.setValue(Fragments.MENU_FRAGMENT);

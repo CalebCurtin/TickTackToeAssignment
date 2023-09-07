@@ -91,6 +91,7 @@ public class UserProfileFragment extends Fragment {
         AvatarRecyclerViewAdapter adapter = new AvatarRecyclerViewAdapter(avatarDataList, viewModel);
         rv.setAdapter(adapter);
 
+        viewModel.playerOneName = profile_editText.getText().toString();
 
         profile_backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
