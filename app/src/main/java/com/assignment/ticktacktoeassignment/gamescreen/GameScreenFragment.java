@@ -35,6 +35,7 @@ public class GameScreenFragment extends Fragment {
     // Game Params
     private boolean placeAnX = true; // fallback default
     private boolean startPlayerIsX;
+    private boolean player1 = true; // these bools should be done better
     private boolean gameActive = true;
     private int boardSize = 3;      // fallback default
     private int goalSize = 3;       // fallback default
@@ -52,10 +53,10 @@ public class GameScreenFragment extends Fragment {
     private Button undoButton;
     private Button resetButton;
     private View rootView;
+    private String playerName;
 
     private ImageView playerAvatar;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -100,6 +101,7 @@ public class GameScreenFragment extends Fragment {
         boardSize = mainActivityDataViewModel.boardSize;
         goalSize = mainActivityDataViewModel.winCondition;
         startPlayerIsX = mainActivityDataViewModel.xOnPlayer1;
+        playerName = mainActivityDataViewModel.playerOneName;
 
         // Get all the components
         infoText = rootView.findViewById(R.id.gameScreenText);
@@ -257,7 +259,8 @@ public class GameScreenFragment extends Fragment {
             int winner = checkWin(x, y);
             if (winner == 1 || winner == 2) {
                 // Someone won
-                infoText.setText("Player " + ((moveCount-1)%2 + 1) + " won!");  // This is incredibly cursed
+                if (winner == 1) { infoText.setText(playerName + " won!"); }
+                if (winner == 2) { infoText.setText("Player 2 won!"); }
                 playerIndicator.setVisibility(View.GONE);
                 gameActive = false;
                 showButtons();
@@ -299,7 +302,7 @@ public class GameScreenFragment extends Fragment {
     }
 
     private void restartGame() {
-        infoText.setText("Player 1's Turn");
+        infoText.setText(playerName + "'s Turn");
         playerIndicator.setVisibility(View.VISIBLE);
         rematchButton.setVisibility(View.GONE);
         homeButton.setVisibility(View.GONE);
@@ -321,7 +324,9 @@ public class GameScreenFragment extends Fragment {
     }
 
     private void updatePlayerIndicator() {
-        infoText.setText("Player " + (moveCount%2 + 1) + "'s Turn");
+        if (player1) { infoText.setText(playerName + "'s Turn"); }
+        else { infoText.setText("Player 2's Turn"); }
+
         if (placeAnX) {
             playerIndicator.setImageResource(R.drawable.x);
         } else {
@@ -366,6 +371,7 @@ public class GameScreenFragment extends Fragment {
                 lastImageClicked.setImageAlpha(0);
                 moveCount--;
                 placeAnX = !placeAnX;
+                player1 = !player1;
                 updatePlayerIndicator();
             }
         }

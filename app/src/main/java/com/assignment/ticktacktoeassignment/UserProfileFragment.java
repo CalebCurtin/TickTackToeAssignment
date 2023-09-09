@@ -35,8 +35,8 @@ public class UserProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button profile_backBtn;
-    private EditText profile_editText;
+    private Button backButton;
+    private EditText playerName;
 
     private RecyclerView rv;
 
@@ -75,8 +75,8 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
-        profile_editText = view.findViewById(R.id.profile_editText);
-        profile_backBtn = view.findViewById(R.id.profile_backBtn);
+        playerName = view.findViewById(R.id.profile_editText);
+        backButton = view.findViewById(R.id.profile_backBtn);
 
         viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
 
@@ -91,12 +91,11 @@ public class UserProfileFragment extends Fragment {
         AvatarRecyclerViewAdapter adapter = new AvatarRecyclerViewAdapter(avatarDataList, viewModel);
         rv.setAdapter(adapter);
 
-        viewModel.playerOneName = profile_editText.getText().toString();
-
-        profile_backBtn.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
+                viewModel.playerOneName = playerName.getText().toString();
                 viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
             }
 
