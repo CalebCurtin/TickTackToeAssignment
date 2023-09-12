@@ -43,10 +43,18 @@
             app:layout_constraintTop_toBottomOf="@+id/HelloMessage">
 
             <Button
-                android:id="@+id/startButton"
+                android:id="@+id/start2PlayerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Play Game" />
+                android:text="2 Player Game" />
+
+            <Button
+                android:id="@+id/start1PlayerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Single Player Game"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="470dp" />
 
             <Button
                 android:id="@+id/profileButton"

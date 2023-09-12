@@ -64,21 +64,31 @@ public class MenuFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
         // Setup button references
-        Button gameButton = rootView.findViewById(R.id.startButton);
+        Button gameSinglePlayerButton = rootView.findViewById(R.id.start1PlayerButton);
+        Button gameTwoPlayerButton = rootView.findViewById(R.id.start2PlayerButton);
         Button settingsButton = rootView.findViewById(R.id.settingsButton);
         Button profileButton = rootView.findViewById(R.id.profileButton);
         Button statsButton = rootView.findViewById(R.id.statsButton);
         // Setup button listeners
-        setupListeners(gameButton, settingsButton, profileButton, statsButton);
+        setupListeners(gameSinglePlayerButton, gameTwoPlayerButton, settingsButton, profileButton, statsButton);
 
         return rootView;
     }
 
-    private void setupListeners(Button gameButton, Button settingsButton, Button profileButton, Button statsButton) {
+    private void setupListeners(Button gameSinglePlayerButton, Button gameTwoPlayerButton, Button settingsButton, Button profileButton, Button statsButton) {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
-        gameButton.setOnClickListener(new View.OnClickListener() {
+        gameSinglePlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mainActivityDataViewModel.playerTwoIsAI = true;
+                mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
+            }
+        });
+
+        gameTwoPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.playerTwoIsAI = false;
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });
