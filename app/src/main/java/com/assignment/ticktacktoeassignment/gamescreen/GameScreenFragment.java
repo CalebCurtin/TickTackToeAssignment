@@ -1,5 +1,6 @@
 package com.assignment.ticktacktoeassignment.gamescreen;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.assignment.ticktacktoeassignment.MainActivityData;
 import com.assignment.ticktacktoeassignment.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,10 +39,12 @@ public class GameScreenFragment extends Fragment {
     private boolean startPlayerIsX;
     private boolean player1 = true; // these bools should be done better
     private boolean gameActive = true;
+    private boolean aiIsActive = false;
     private int boardSize = 3;      // fallback default
     private int goalSize = 3;       // fallback default
     private int moveCount = 0;
     private int[][] board = new int[boardSize][boardSize];
+    private ImageView[][] boardImages = new ImageView[boardSize][boardSize];
     private int[] lastMove = new int[2];
     private ImageView lastImageClicked = null;
 
@@ -102,6 +106,7 @@ public class GameScreenFragment extends Fragment {
         goalSize = mainActivityDataViewModel.winCondition;
         startPlayerIsX = mainActivityDataViewModel.xOnPlayer1;
         playerName = mainActivityDataViewModel.playerOneName;
+        aiIsActive = mainActivityDataViewModel.playerTwoIsAI;
 
         // Get all the components
         infoText = rootView.findViewById(R.id.gameScreenText);
@@ -240,6 +245,7 @@ public class GameScreenFragment extends Fragment {
             lastImageClicked = imageView;
 
             // Place a marker at the clicked location
+            imageView.setImageAlpha(255);
             if (placeAnX) {
                 imageView.setImageResource(R.drawable.x);
                 board[x][y] = 1;
@@ -307,6 +313,7 @@ public class GameScreenFragment extends Fragment {
         rematchButton.setVisibility(View.GONE);
         homeButton.setVisibility(View.GONE);
         board = new int[boardSize][boardSize];
+        boardImages = new ImageView[boardSize][boardSize];
         placeAnX = startPlayerIsX;
         moveCount = 0;
         setupRecycler(rootView); // TODO: There should be a better way to do this
@@ -341,6 +348,40 @@ public class GameScreenFragment extends Fragment {
         } else {
             playerAvatar.setImageResource(R.drawable.defaultuser);
         }
+    }
+
+    public void playerClickedOn(int x, int y) {
+        boolean playerMadeAMove = placeToken(x, y, boardImages[x][y]);
+        if (playerMadeAMove) {
+            if (aiIsActive) {
+                aiMakeMove();
+            }
+        }
+    }
+
+    private void aiMakeMove() {
+        // Get all blank spots
+        ArrayList<int[]> blankSpots = new ArrayList<>();
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (board[i][j] == 0) {
+                    blankSpots.add(new int[] { i, j });
+                }
+            }
+        }
+        // Pick a spot to make a move
+        Random random = new Random();
+        int numBlankSpots = blankSpots.size();
+        if (numBlankSpots > 0) {
+            int[] pos = blankSpots.get(random.nextInt(blankSpots.size()));
+            Log.println(Log.INFO, "santasspy", "AI Placing a token at [" + pos[0] + ", " + pos[1] + "]");
+            placeToken(pos[0], pos[1], boardImages[pos[0]][pos[1]]);
+            checkWin(pos[0], pos[1]);
+        }
+    }
+
+    public void addImageViewToBoard(int x, int y, ImageView image) {
+        boardImages[x][y] = image;
     }
 
     private class ChangeScreenOnClickListener implements View.OnClickListener {

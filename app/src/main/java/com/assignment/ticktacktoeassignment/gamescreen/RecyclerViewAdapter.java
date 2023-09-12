@@ -43,6 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.x = recyclerData.x;
         holder.y = recyclerData.y;
         holder.imageView.setImageResource(recyclerData.imageID);
+        gameFrag.addImageViewToBoard(holder.x, holder.y, holder.imageView);
 
         // Work out how large the images should be based on the width of the screen
         Log.println(Log.INFO, "santasspy", "gridSquareWidth: " + gridSize);
@@ -69,14 +70,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             imageView = itemView.findViewById(R.id.gameImageViewCard);
             imageView.setImageAlpha(0);
+
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    boolean placed = gameFrag.placeToken(x, y, imageView);
-                    if (placed) {
-                        imageView.setImageAlpha(255);
-                        gameFrag.checkWin(x, y);
-                    }
+                    gameFrag.playerClickedOn(x, y);
                 }
             });
         }

@@ -9,6 +9,7 @@ public class MainActivityData extends ViewModel {
     public int boardSize = 3;
     public int winCondition = 3;
     public boolean xOnPlayer1 = true; // true if player 1 starts with X, false if player 1 starts with O
+    public boolean playerTwoIsAI = true;
 
     public int selectedAvatarImage=0;
 

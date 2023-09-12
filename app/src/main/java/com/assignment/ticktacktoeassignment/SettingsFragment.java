@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
 import androidx.lifecycle.ViewModelProvider;
 
 /**
@@ -82,10 +84,10 @@ public class SettingsFragment extends Fragment {
                 MainActivityData viewModel = new ViewModelProvider(requireActivity()).get(MainActivityData.class);
 
                 // Get the values from the spinners and pass to the viewModel
-                saveSettings(viewModel);
+                boolean saveSuccess = saveSettings(viewModel);
 
                 // Navigate back to the menu fragment
-                viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
+                if (saveSuccess) { viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT); }
             }
         });
 
@@ -114,8 +116,9 @@ public class SettingsFragment extends Fragment {
         playerMarkersSpinner.setAdapter(adapter);
     }
 
-    private void saveSettings(MainActivityData mainActivityData)
+    private boolean saveSettings(MainActivityData mainActivityData)
     {
+        boolean saveSuccess = true;
         String boardSize = boardSizeSpinner.getSelectedItem().toString();
         String winCondition = winConditionSpinner.getSelectedItem().toString();
         String playerMarker = playerMarkersSpinner.getSelectedItem().toString();
@@ -123,9 +126,17 @@ public class SettingsFragment extends Fragment {
         int board = parseBoardSize(boardSize);
         int winCon = parseWinCon(winCondition);
         boolean player = parsePlayerMarker(playerMarker);
+        // Make sure that the winCon is within the size of the board
+        if (winCon > board) {
+            Toast.makeText(getView().getContext(), "Your win condition must fit inside the board", Toast.LENGTH_SHORT).show();
+            saveSuccess = false;
+        }
+
         mainActivityData.boardSize = board;
         mainActivityData.winCondition = winCon;
         mainActivityData.xOnPlayer1 = player;
+
+        return saveSuccess;
     }
 
     private int parseBoardSize(String boardText) {
