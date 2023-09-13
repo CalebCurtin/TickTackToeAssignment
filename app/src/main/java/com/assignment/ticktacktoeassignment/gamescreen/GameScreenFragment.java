@@ -306,6 +306,7 @@ public class GameScreenFragment extends Fragment {
                 showButtons();
             } else {
                 turnTimeLeft = turnMaxLength;
+                turnTimer.setText("Turn Timer: " + turnMaxLength + "s");
                 updatePlayerIndicator();
             }
         }
@@ -352,6 +353,7 @@ public class GameScreenFragment extends Fragment {
         gameActive = true;
         handler.removeCallbacks(tickTimer); // stop more than one clock ticking
         handler.postDelayed(tickTimer, 1000);
+        turnTimer.setText("Turn Timer: " + turnMaxLength + "s");
     }
 
     private void buildButtons() {
@@ -459,7 +461,25 @@ public class GameScreenFragment extends Fragment {
         @Override
         public void run() {
             if (turnTimeLeft <= 0) {
-                // someone lost
+                turnTimer.setText("Times Up!");
+
+                MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+
+                // update the display
+                if (player1) {
+                    infoText.setText(player2Name + " won!");
+                    mainActivityDataViewModel.gameEnded(!aiIsActive, 2);
+                    playerAvatar.setImageResource(player2Avatar);
+                } else {
+                    infoText.setText(player1Name + " won!");
+                    mainActivityDataViewModel.gameEnded(!aiIsActive, 1);
+                    playerAvatar.setImageResource(player1Avatar);
+                }
+
+                // stop the game
+                gameActive = false;
+                playerIndicator.setVisibility(View.GONE);
+                showButtons();
             } else {
                 turnTimeLeft--;
                 turnTimer.setText("Turn Timer: " + turnTimeLeft + "s");
