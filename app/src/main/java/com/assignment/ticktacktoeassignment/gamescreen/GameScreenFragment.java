@@ -44,13 +44,17 @@ public class GameScreenFragment extends Fragment {
     private int boardSize = 3;      // fallback default
     private int goalSize = 3;       // fallback default
     private int moveCount = 0;
+    private int turnTimeLeft = 10;
+    private int turnMaxLength = 10;
     private int[][] board = new int[boardSize][boardSize];
     private ImageView[][] boardImages = new ImageView[boardSize][boardSize];
     private int[] lastMove = new int[2];
     private ImageView lastImageClicked = null;
 
     private TextView infoText;
+    private TextView turnTimer;
     private ImageView playerIndicator;
+    private ImageView playerAvatar;
     private Button rematchButton;
     private Button homeButton;
     private Button menuButton;
@@ -65,7 +69,7 @@ public class GameScreenFragment extends Fragment {
     private int xMarker;
     private int oMarker;
 
-    private ImageView playerAvatar;
+    private int currentTimerID;
 
     private String mParam1;
     private String mParam2;
@@ -118,9 +122,11 @@ public class GameScreenFragment extends Fragment {
         aiIsActive = mainActivityDataViewModel.playerTwoIsAI;
         oMarker = mainActivityDataViewModel.oMarker;
         xMarker = mainActivityDataViewModel.xMarker;
+        turnMaxLength = mainActivityDataViewModel.turnLength;
 
         // Get all the components
         infoText = rootView.findViewById(R.id.gameScreenText);
+        turnTimer = rootView.findViewById(R.id.gameScreenTurnTimer);
         playerIndicator = rootView.findViewById(R.id.gameScreenPlayerIndicatorImage);
         playerAvatar = rootView.findViewById(R.id.gameScreenPlayerAvatar);
         rematchButton = rootView.findViewById(R.id.gameScreenRematchButton);
@@ -133,7 +139,6 @@ public class GameScreenFragment extends Fragment {
 
         // Give the buttons functionality
         buildButtons();
-
 
         // Setup the game
         restartGame();
@@ -272,6 +277,7 @@ public class GameScreenFragment extends Fragment {
             logBoardState();
 
             // check for winner and update the info text
+            MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
             moveCount++;
             int winner = checkWin(x, y);
             if (winner != 0) {
@@ -292,7 +298,6 @@ public class GameScreenFragment extends Fragment {
                 }
 
                 // update the stats
-                MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
                 mainActivityDataViewModel.gameEnded(!aiIsActive, winner);
 
                 // stop the game
@@ -300,6 +305,7 @@ public class GameScreenFragment extends Fragment {
                 playerIndicator.setVisibility(View.GONE);
                 showButtons();
             } else {
+                turnTimeLeft = turnMaxLength;
                 updatePlayerIndicator();
             }
         }
@@ -308,8 +314,8 @@ public class GameScreenFragment extends Fragment {
 
     /**
      * Helper function for making sure we don't try and access outside the board array
-     * @param x
-     * @param y
+     * @param x the column
+     * @param y the row
      * @return true if [x, y] is in bounds, or false otherwise
      */
     private boolean inBounds(int x, int y) { return x >= 0 && x < boardSize && y >= 0 && y < boardSize; }
@@ -340,9 +346,12 @@ public class GameScreenFragment extends Fragment {
         placeAnX = startPlayerIsX;
         player1 = true;
         moveCount = 0;
+        turnTimeLeft = turnMaxLength;
         setupRecycler(rootView); // TODO: There should be a better way to do this
         updatePlayerIndicator();
         gameActive = true;
+        handler.removeCallbacks(tickTimer); // stop more than one clock ticking
+        handler.postDelayed(tickTimer, 1000);
     }
 
     private void buildButtons() {
@@ -443,6 +452,19 @@ public class GameScreenFragment extends Fragment {
         public void run() {
             gameActive = true;
             aiMakeMove();
+        }
+    };
+
+    private Runnable tickTimer = new Runnable() {
+        @Override
+        public void run() {
+            if (turnTimeLeft <= 0) {
+                // someone lost
+            } else {
+                turnTimeLeft--;
+                turnTimer.setText("Turn Timer: " + turnTimeLeft + "s");
+                handler.postDelayed(tickTimer, 1000);
+            }
         }
     };
 }
