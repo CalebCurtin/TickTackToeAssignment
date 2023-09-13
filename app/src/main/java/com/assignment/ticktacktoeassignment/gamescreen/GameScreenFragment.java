@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.assignment.ticktacktoeassignment.R;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +36,7 @@ public class GameScreenFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Handler handler = new Handler();
 
     // Game Params
     private boolean placeAnX = true; // fallback default
@@ -352,10 +356,9 @@ public class GameScreenFragment extends Fragment {
 
     public void playerClickedOn(int x, int y) {
         boolean playerMadeAMove = placeToken(x, y, boardImages[x][y]);
-        if (playerMadeAMove) {
-            if (aiIsActive) {
-                aiMakeMove();
-            }
+        if (playerMadeAMove && aiIsActive && gameActive) {
+            gameActive = false;
+            handler.postDelayed(runAITask, 600);
         }
     }
 
@@ -427,4 +430,11 @@ public class GameScreenFragment extends Fragment {
         playerAvatar.setImageResource(player2Avatar);
         infoText.setText(player2Name + "'s turn!");
     }
+
+    private Runnable runAITask = new Runnable() {
+        public void run() {
+            gameActive = true;
+            aiMakeMove();
+        }
+    };
 }
