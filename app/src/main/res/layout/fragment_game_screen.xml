@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gameScreenText"
         app:layout_constraintTop_toTopOf="@+id/gameScreenText"
-        app:srcCompat="@drawable/x" />
+        app:srcCompat="@drawable/twitter_logo" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline12"

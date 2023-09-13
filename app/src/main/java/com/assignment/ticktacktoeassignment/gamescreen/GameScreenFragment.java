@@ -1,6 +1,5 @@
 package com.assignment.ticktacktoeassignment.gamescreen;
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,8 +21,6 @@ import com.assignment.ticktacktoeassignment.R;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -230,7 +227,7 @@ public class GameScreenFragment extends Fragment {
         ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
 
         for (int i = 0; i < boardSize * boardSize; i++) {
-            recyclerDataArrayList.add(new RecyclerData(R.drawable.x, i % boardSize, i / boardSize, this));
+            recyclerDataArrayList.add(new RecyclerData(R.drawable.twitter_logo, i % boardSize, i / boardSize, this));
         }
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), boardSize);

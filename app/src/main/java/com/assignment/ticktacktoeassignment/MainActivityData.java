@@ -19,8 +19,8 @@ public class MainActivityData extends ViewModel {
     // Customization settings
     public int playerOneAvatar = R.drawable.defaultuser;
     public int playerTwoAvatar = R.drawable.defaultuser;
-    public int xMarker = R.drawable.x;      // when making custom X and O markers, set this!!!
-    public int oMarker = R.drawable.o;      // when making custom X and O markers, set this!!!
+    public int xMarker = R.drawable.default_x;      // when making custom X and O markers, set this!!!
+    public int oMarker = R.drawable.default_o;      // when making custom X and O markers, set this!!!
     public int playerOneMarker = xMarker;
     public int playerTwoMarker = oMarker;
     public String playerOneName = "Player 1";
