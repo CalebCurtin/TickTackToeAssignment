@@ -8,12 +8,12 @@
     tools:context=".StatsFragment">
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/stat_p1_draws"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/guideline26"
-        app:layout_constraintEnd_toStartOf="@+id/player2Draws"
+        app:layout_constraintEnd_toStartOf="@+id/player2draws"
         app:layout_constraintStart_toEndOf="@+id/player1Draws"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
@@ -22,9 +22,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="WinPercentage:"
-        app:layout_constraintBottom_toTopOf="@+id/player2Draws"
+        app:layout_constraintBottom_toTopOf="@+id/player2draws"
         app:layout_constraintEnd_toStartOf="@+id/guideline28"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintStart_toEndOf="@+id/stat_p1_winpercent"
         app:layout_constraintTop_toTopOf="@+id/guideline24" />
 
     <TextView
@@ -44,11 +44,11 @@
         android:text="Losses :"
         app:layout_constraintBottom_toTopOf="@+id/Player2WinPerc"
         app:layout_constraintEnd_toStartOf="@+id/guideline28"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/stat_p1_losses"
         app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
     <TextView
-        android:id="@+id/player2Draws"
+        android:id="@+id/player2draws"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Draws :"
@@ -167,7 +167,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline26" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/stat_p1_totalgames"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -177,7 +177,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline21" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/stat_p1_wins"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -189,7 +189,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/stat_p1_losses"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -199,7 +199,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/stat_p1_winpercent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -209,7 +209,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline24" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/stat_p2_totalgames"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -219,7 +219,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline21" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/stat_p2_wins"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -229,7 +229,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline22" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/stat_p2_losses"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -239,7 +239,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/stat_p2_winpercent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
@@ -249,13 +249,13 @@
         app:layout_constraintTop_toTopOf="@+id/guideline24" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/stat_p2_draws"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/player2Draws"
+        app:layout_constraintStart_toEndOf="@+id/player2draws"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <androidx.constraintlayout.widget.Guideline

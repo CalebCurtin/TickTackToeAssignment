@@ -277,19 +277,30 @@ public class GameScreenFragment extends Fragment {
             // check for winner and update the info text
             moveCount++;
             int winner = checkWin(x, y);
-            if (winner == 1 || winner == 2) {
-                // Someone won
-                if (winner == 1) { infoText.setText(player1Name + " won!"); playerAvatar.setImageResource(player1Avatar); }
-                if (winner == 2) { infoText.setText(player2Name + " won!"); playerAvatar.setImageResource(player2Avatar); }
+            if (winner != 0) {
+                // update the info text
+                switch (winner) {
+                    case 1:
+                        infoText.setText(player1Name + " won!");
+                        playerAvatar.setImageResource(player1Avatar);
+                        break;
+                    case 2:
+                        infoText.setText(player2Name + " won!");
+                        playerAvatar.setImageResource(player2Avatar);
+                        break;
+                    case 3:
+                        infoText.setText("It's a Draw!");
+                        playerAvatar.setVisibility(View.GONE);
+                        break;
+                }
+
+                // update the stats
+                MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+                mainActivityDataViewModel.gameEnded(!aiIsActive, winner);
+
+                // stop the game
                 gameActive = false;
                 playerIndicator.setVisibility(View.GONE);
-                showButtons();
-            } else if (winner == 3) {
-                // Draw
-                gameActive = false;
-                infoText.setText("It's a Draw!");
-                playerIndicator.setVisibility(View.GONE);
-                playerAvatar.setVisibility(View.GONE);
                 showButtons();
             } else {
                 updatePlayerIndicator();
