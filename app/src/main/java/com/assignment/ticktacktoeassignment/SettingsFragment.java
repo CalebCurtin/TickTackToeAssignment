@@ -126,6 +126,7 @@ public class SettingsFragment extends Fragment {
         int board = parseBoardSize(boardSize);
         int winCon = parseWinCon(winCondition);
         boolean player = parsePlayerMarker(playerMarker);
+
         // Make sure that the winCon is within the size of the board
         if (winCon > board) {
             Toast.makeText(getView().getContext(), "Your win condition must fit inside the board", Toast.LENGTH_SHORT).show();

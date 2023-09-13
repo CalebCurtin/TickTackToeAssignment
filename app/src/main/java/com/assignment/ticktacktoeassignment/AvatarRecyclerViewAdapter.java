@@ -49,8 +49,7 @@ public class AvatarRecyclerViewAdapter extends RecyclerView.Adapter<AvatarRecycl
             public void onClick(View view) {
                 String message = "You have selected the " + avatar.getImageId() + " avatar.";
                 Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-
-                viewModel.selectedAvatarImage = imageResourceId;
+                viewModel.playerOneAvatar = imageResourceId;
             }
         });
     }

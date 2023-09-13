@@ -11,9 +11,14 @@ public class MainActivityData extends ViewModel {
     public boolean xOnPlayer1 = true; // true if player 1 starts with X, false if player 1 starts with O
     public boolean playerTwoIsAI = true;
 
-    public int selectedAvatarImage=0;
-
+    public int playerOneAvatar = R.drawable.defaultuser;
+    public int playerTwoAvatar = R.drawable.defaultuser;
+    public int xMarker = R.drawable.x;
+    public int oMarker = R.drawable.o;
+    public int playerOneMarker = xMarker;
+    public int playerTwoMarker = oMarker;
     public String playerOneName = "Player 1";
+    public String playerTwoName = "Player 2";
 
     public MainActivityData() {
         clickedValue = new MediatorLiveData<Fragments>();

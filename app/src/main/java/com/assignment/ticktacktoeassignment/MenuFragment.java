@@ -81,6 +81,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.playerTwoIsAI = true;
+                mainActivityDataViewModel.playerTwoName = "AI";
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });
@@ -89,6 +90,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.playerTwoIsAI = false;
+                mainActivityDataViewModel.playerTwoName = "Player 2";
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });

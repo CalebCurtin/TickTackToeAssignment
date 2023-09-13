@@ -57,7 +57,12 @@ public class GameScreenFragment extends Fragment {
     private Button undoButton;
     private Button resetButton;
     private View rootView;
-    private String playerName;
+    private String player1Name;
+    private String player2Name;
+    private int player1Avatar;
+    private int player2Avatar;
+    private int xMarker;
+    private int oMarker;
 
     private ImageView playerAvatar;
 
@@ -105,8 +110,13 @@ public class GameScreenFragment extends Fragment {
         boardSize = mainActivityDataViewModel.boardSize;
         goalSize = mainActivityDataViewModel.winCondition;
         startPlayerIsX = mainActivityDataViewModel.xOnPlayer1;
-        playerName = mainActivityDataViewModel.playerOneName;
+        player1Name = mainActivityDataViewModel.playerOneName;
+        player2Name = mainActivityDataViewModel.playerTwoName;
+        player1Avatar = mainActivityDataViewModel.playerOneAvatar;
+        player2Avatar = mainActivityDataViewModel.playerTwoAvatar;
         aiIsActive = mainActivityDataViewModel.playerTwoIsAI;
+        oMarker = mainActivityDataViewModel.oMarker;
+        xMarker = mainActivityDataViewModel.xMarker;
 
         // Get all the components
         infoText = rootView.findViewById(R.id.gameScreenText);
@@ -118,7 +128,6 @@ public class GameScreenFragment extends Fragment {
         undoButton = rootView.findViewById(R.id.gameScreenUndoButton);
         resetButton = rootView.findViewById(R.id.gameScreenResetButton);
         settingsButton = rootView.findViewById(R.id.gameScreenSettingsButton);
-        setPlayerAvatar();
 
 
         // Give the buttons functionality
@@ -247,15 +256,16 @@ public class GameScreenFragment extends Fragment {
             // Place a marker at the clicked location
             imageView.setImageAlpha(255);
             if (placeAnX) {
-                imageView.setImageResource(R.drawable.x);
+                imageView.setImageResource(xMarker);
                 board[x][y] = 1;
             } else {
-                imageView.setImageResource(R.drawable.o);
+                imageView.setImageResource(oMarker);
                 board[x][y] = 2;
             }
 
             // change which players turn it is
             placeAnX = !placeAnX;
+            player1 = !player1;
 
             // print board state to logcat
             logBoardState();
@@ -265,16 +275,17 @@ public class GameScreenFragment extends Fragment {
             int winner = checkWin(x, y);
             if (winner == 1 || winner == 2) {
                 // Someone won
-                if (winner == 1) { infoText.setText(playerName + " won!"); }
-                if (winner == 2) { infoText.setText("Player 2 won!"); }
-                playerIndicator.setVisibility(View.GONE);
+                if (winner == 1) { infoText.setText(player1Name + " won!"); playerAvatar.setImageResource(player1Avatar); }
+                if (winner == 2) { infoText.setText(player2Name + " won!"); playerAvatar.setImageResource(player2Avatar); }
                 gameActive = false;
+                playerIndicator.setVisibility(View.GONE);
                 showButtons();
             } else if (winner == 3) {
                 // Draw
                 gameActive = false;
-                infoText.setText("Draw!");
+                infoText.setText("It's a Draw!");
                 playerIndicator.setVisibility(View.GONE);
+                playerAvatar.setVisibility(View.GONE);
                 showButtons();
             } else {
                 updatePlayerIndicator();
@@ -308,13 +319,14 @@ public class GameScreenFragment extends Fragment {
     }
 
     private void restartGame() {
-        infoText.setText(playerName + "'s Turn");
+        setPlayerOne();
         playerIndicator.setVisibility(View.VISIBLE);
         rematchButton.setVisibility(View.GONE);
         homeButton.setVisibility(View.GONE);
         board = new int[boardSize][boardSize];
         boardImages = new ImageView[boardSize][boardSize];
         placeAnX = startPlayerIsX;
+        player1 = true;
         moveCount = 0;
         setupRecycler(rootView); // TODO: There should be a better way to do this
         updatePlayerIndicator();
@@ -331,23 +343,11 @@ public class GameScreenFragment extends Fragment {
     }
 
     private void updatePlayerIndicator() {
-        if (player1) { infoText.setText(playerName + "'s Turn"); }
-        else { infoText.setText("Player 2's Turn"); }
+        if (player1) { setPlayerOne(); }
+        else {         setPlayerTwo(); }
 
-        if (placeAnX) {
-            playerIndicator.setImageResource(R.drawable.x);
-        } else {
-            playerIndicator.setImageResource(R.drawable.o);
-        }
-    }
-
-    private void setPlayerAvatar() {
-        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
-        if (mainActivityDataViewModel.selectedAvatarImage != 0) {
-            playerAvatar.setImageResource(mainActivityDataViewModel.selectedAvatarImage);
-        } else {
-            playerAvatar.setImageResource(R.drawable.defaultuser);
-        }
+        if (placeAnX) { playerIndicator.setImageResource(xMarker); }
+        else {          playerIndicator.setImageResource(oMarker); }
     }
 
     public void playerClickedOn(int x, int y) {
@@ -416,5 +416,15 @@ public class GameScreenFragment extends Fragment {
                 updatePlayerIndicator();
             }
         }
+    }
+
+    private void setPlayerOne() {
+        playerAvatar.setImageResource(player1Avatar);
+        infoText.setText(player1Name + "'s turn!");
+    }
+
+    private void setPlayerTwo() {
+        playerAvatar.setImageResource(player2Avatar);
+        infoText.setText(player2Name + "'s turn!");
     }
 }
