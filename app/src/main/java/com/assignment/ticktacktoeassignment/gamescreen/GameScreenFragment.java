@@ -124,6 +124,7 @@ public class GameScreenFragment extends Fragment {
         player1Avatar = mainActivityDataViewModel.playerOneAvatar;
         player2Avatar = mainActivityDataViewModel.playerTwoAvatar;
         aiIsActive = mainActivityDataViewModel.playerTwoIsAI;
+        if (aiIsActive) { player2Name = "AI"; player2Avatar = R.drawable.robot; }
         oMarker = mainActivityDataViewModel.oMarker;
         xMarker = mainActivityDataViewModel.xMarker;
         turnMaxLength = mainActivityDataViewModel.turnLength;
