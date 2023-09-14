@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private SettingsFragment settingsFragment = new SettingsFragment();
     private StatsFragment statsFragment = new StatsFragment();
     private UserProfileFragment userProfileFragment = new UserProfileFragment();
+
+    private UserProfileTwoFragment userProfileTwoFragment = new UserProfileTwoFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void loadProfileTwoScreen() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
+
+        View mainMenuContainer = findViewById(R.id.mainMenu_Container);
+        if (frag == null) {
+            fm.beginTransaction().add(R.id.mainMenu_Container, userProfileTwoFragment).commit();
+        } else {
+            fm.beginTransaction().replace(R.id.mainMenu_Container, userProfileTwoFragment).commit();
+        }
+    }
+
     private void loadStatsScreen() {
         FragmentManager fm = getSupportFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.mainMenu_Container);
@@ -110,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case STATS_FRAGMENT:
                         loadStatsScreen();
+                        break;
+                    case PROFILETWO_FRAGMENT:
+                        loadProfileTwoScreen();
                         break;
                 }
             }

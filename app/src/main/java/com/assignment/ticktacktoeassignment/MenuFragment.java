@@ -68,14 +68,15 @@ public class MenuFragment extends Fragment {
         Button gameTwoPlayerButton = rootView.findViewById(R.id.start2PlayerButton);
         Button settingsButton = rootView.findViewById(R.id.settingsButton);
         Button profileButton = rootView.findViewById(R.id.profileButton);
+        Button profileButtonTwo = rootView.findViewById(R.id.profileButton2);
         Button statsButton = rootView.findViewById(R.id.statsButton);
         // Setup button listeners
-        setupListeners(gameSinglePlayerButton, gameTwoPlayerButton, settingsButton, profileButton, statsButton);
+        setupListeners(gameSinglePlayerButton, gameTwoPlayerButton, settingsButton, profileButton, profileButtonTwo, statsButton);
 
         return rootView;
     }
 
-    private void setupListeners(Button gameSinglePlayerButton, Button gameTwoPlayerButton, Button settingsButton, Button profileButton, Button statsButton) {
+    private void setupListeners(Button gameSinglePlayerButton, Button gameTwoPlayerButton, Button settingsButton, Button profileButton, Button profileButton2, Button statsButton) {
         MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
         gameSinglePlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,8 +92,6 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.playerTwoIsAI = false;
-                mainActivityDataViewModel.playerTwoName = "Player 2";
-                mainActivityDataViewModel.playerTwoAvatar = R.drawable.defaultuser;
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });
@@ -108,6 +107,13 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.PROFILE_FRAGMENT);
+            }
+        });
+
+        profileButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.PROFILETWO_FRAGMENT);
             }
         });
 
