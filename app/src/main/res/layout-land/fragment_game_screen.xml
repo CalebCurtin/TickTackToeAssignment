@@ -169,7 +169,6 @@
                     android:visibility="visible" />
 
             </RelativeLayout>
-
         </LinearLayout>
     </LinearLayout>
 
