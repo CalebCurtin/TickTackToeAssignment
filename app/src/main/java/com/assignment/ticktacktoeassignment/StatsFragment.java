@@ -96,6 +96,5 @@ public class StatsFragment extends Fragment {
         ((TextView)view.findViewById(R.id.stat_p2_draws)).setText(String.valueOf(stats.get("p2_draws")));
         ((TextView)view.findViewById(R.id.stat_p1_winpercent)).setText(String.valueOf(stats.get("p1_winPercent")) + "%");
         ((TextView)view.findViewById(R.id.stat_p2_winpercent)).setText(String.valueOf(stats.get("p2_winPercent")) + "%");
-
     }
 }

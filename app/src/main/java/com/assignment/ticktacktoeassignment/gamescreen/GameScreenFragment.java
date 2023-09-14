@@ -68,6 +68,10 @@ public class GameScreenFragment extends Fragment {
     private int player2Avatar;
     private int xMarker;
     private int oMarker;
+    private TextView player1MovesTextView;
+    private TextView player2MovesTextView;
+    private int player1Moves = 0;
+    private int player2Moves = 0;
 
     private int currentTimerID;
 
@@ -135,6 +139,8 @@ public class GameScreenFragment extends Fragment {
         undoButton = rootView.findViewById(R.id.gameScreenUndoButton);
         resetButton = rootView.findViewById(R.id.gameScreenResetButton);
         settingsButton = rootView.findViewById(R.id.gameScreenSettingsButton);
+        player1MovesTextView = rootView.findViewById(R.id.player1Moves);
+        player2MovesTextView = rootView.findViewById(R.id.player2Moves);
 
 
         // Give the buttons functionality
@@ -272,6 +278,14 @@ public class GameScreenFragment extends Fragment {
             // change which players turn it is
             placeAnX = !placeAnX;
             player1 = !player1;
+
+            if (player1) {
+                player2Moves++; // Increment player 2 moves
+                player2MovesTextView.setText("Player 2 Moves: " + player2Moves);
+            } else {
+                player1Moves++; // Increment player 1 moves
+                player1MovesTextView.setText("Player 1 Moves: " + player1Moves);
+            }
 
             // print board state to logcat
             logBoardState();
