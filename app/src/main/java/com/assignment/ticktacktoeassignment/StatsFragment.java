@@ -77,7 +77,6 @@ public class StatsFragment extends Fragment {
                 viewModel.changeFragment(MainActivityData.Fragments.MENU_FRAGMENT);
             }
         });
-
         return view;
     }
 
