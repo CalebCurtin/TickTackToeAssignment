@@ -82,8 +82,6 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.playerTwoIsAI = true;
-                mainActivityDataViewModel.playerTwoName = "AI";
-                mainActivityDataViewModel.playerTwoAvatar = R.drawable.robot;
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });
@@ -92,11 +90,6 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mainActivityDataViewModel.playerTwoIsAI = false;
-                if (mainActivityDataViewModel.playerTwoName == "AI")
-                {
-                    mainActivityDataViewModel.playerTwoName = "Player 2";
-                    mainActivityDataViewModel.playerTwoAvatar = R.drawable.defaultuser;
-                }
                 mainActivityDataViewModel.changeFragment(MainActivityData.Fragments.GAME_FRAGMENT);
             }
         });
