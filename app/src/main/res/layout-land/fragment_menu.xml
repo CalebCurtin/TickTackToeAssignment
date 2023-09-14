@@ -58,7 +58,13 @@
                 android:id="@+id/profileButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit User Profile" />
+                android:text="Edit Player One" />
+
+            <Button
+                android:id="@+id/profileButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Player Two" />
 
             <Button
                 android:id="@+id/settingsButton"

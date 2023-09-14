@@ -1,15 +1,14 @@
 package com.assignment.ticktacktoeassignment;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
@@ -18,10 +17,12 @@ public class AvatarRecyclerViewAdapter extends RecyclerView.Adapter<AvatarRecycl
     private ArrayList<AvatarData> avatarData;
 
     private MainActivityData viewModel;
+    private Fragment currentFragment;
 
-    public AvatarRecyclerViewAdapter(ArrayList<AvatarData> avatarData, MainActivityData viewModel) {
+    public AvatarRecyclerViewAdapter(ArrayList<AvatarData> avatarData, MainActivityData viewModel, Fragment currentFragment) {
         this.avatarData = avatarData;
         this.viewModel = viewModel;
+        this.currentFragment = currentFragment;
     }
 
     @NonNull
@@ -49,7 +50,14 @@ public class AvatarRecyclerViewAdapter extends RecyclerView.Adapter<AvatarRecycl
             public void onClick(View view) {
                 String message = "You have selected the " + avatar.getImageId() + " avatar.";
                 Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-                viewModel.playerOneAvatar = imageResourceId;
+
+                if (currentFragment instanceof UserProfileFragment) {
+                    viewModel.playerOneAvatar = imageResourceId;
+                    Log.d("AvatarRecyclerViewAdapter", "Clicked in UserProfileFragment");
+                } else if (currentFragment instanceof UserProfileTwoFragment) {
+                    viewModel.playerTwoAvatar = imageResourceId;
+                    Log.d("AvatarRecyclerViewAdapter", "Clicked in UserProfileTwoFragment");
+                }
             }
         });
     }

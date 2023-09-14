@@ -55,6 +55,7 @@ public class MainActivityData extends ViewModel {
         SETTINGS_FRAGMENT,
         GAME_FRAGMENT,
         PROFILE_FRAGMENT,
+        PROFILETWO_FRAGMENT,
         STATS_FRAGMENT,
         MENU_FRAGMENT;
     }
