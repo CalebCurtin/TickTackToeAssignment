@@ -70,8 +70,8 @@ public class GameScreenFragment extends Fragment {
     private int oMarker;
     private TextView player1MovesTextView;
     private TextView player2MovesTextView;
-    private int player1Moves = 0;
-    private int player2Moves = 0;
+    int player1Moves = 0;
+    int player2Moves = 0;
 
     private int currentTimerID;
 
@@ -259,6 +259,7 @@ public class GameScreenFragment extends Fragment {
      */
     public boolean placeToken(int x, int y, ImageView imageView) {
         boolean placedSomething = false;
+
         if (gameActive && inBounds(x, y) && board[x][y] == 0) {
             // Save some params for undo
             placedSomething = true;
@@ -372,6 +373,8 @@ public class GameScreenFragment extends Fragment {
         handler.removeCallbacks(tickTimer); // stop more than one clock ticking
         handler.postDelayed(tickTimer, 1000);
         turnTimer.setText("Turn Timer: " + turnMaxLength + "s");
+        player1Moves = 0;
+        player2Moves = 0;
     }
 
     private void buildButtons() {
