@@ -374,7 +374,9 @@ public class GameScreenFragment extends Fragment {
         handler.postDelayed(tickTimer, 1000);
         turnTimer.setText("Turn Timer: " + turnMaxLength + "s");
         player1Moves = 0;
+        player1MovesTextView.setText("Player 1 Moves: " + player1Moves);
         player2Moves = 0;
+        player2MovesTextView.setText("Player 2 Moves: " + player2Moves);
     }
 
     private void buildButtons() {
