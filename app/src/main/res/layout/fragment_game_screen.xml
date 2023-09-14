@@ -5,154 +5,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gameRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/gameScreenText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Player 1's Turn"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/gameRecyclerView"
-        app:layout_constraintEnd_toStartOf="@id/gameScreenPlayerIndicatorImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.644" />
-
-    <Button
-        android:id="@+id/gameScreenHomeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/gameScreenRematchButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameRecyclerView" />
-
-    <Button
-        android:id="@+id/gameScreenRematchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rematch"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/gameScreenHomeButton"
-        app:layout_constraintTop_toBottomOf="@+id/gameRecyclerView" />
-
-    <ImageView
-        android:id="@+id/gameScreenPlayerIndicatorImage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameScreenText"
-        app:layout_constraintTop_toTopOf="@+id/gameScreenText"
-        app:srcCompat="@drawable/twitter_logo" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25547445" />
-
-    <TextView
-        android:id="@+id/Player2TWins"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline14" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
-
-    <Button
-        android:id="@+id/gameScreenMenuButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Menu"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/gameScreenSettingsButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Settings"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline17"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
-
-    <Button
-        android:id="@+id/gameScreenUndoButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Undo"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/guideline14"
-        app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/gameScreenResetButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Reset"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/gameScreenSettingsButton"
-        app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/gameScreenTurnTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Timer"
-        app:layout_constraintBottom_toTopOf="@+id/gameRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        app:layout_constraintTop_toBottomOf="@+id/gameScreenText" />
+        <LinearLayout
+            android:id="@+id/gameScreenButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/gameScreenPlayerAvatar"
-        android:layout_width="38dp"
-        android:layout_height="45dp"
-        app:layout_constraintBottom_toBottomOf="@+id/gameScreenText"
-        app:layout_constraintEnd_toStartOf="@+id/gameScreenText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gameScreenText"
-        tools:srcCompat="@tools:sample/avatars" />
+            <Button
+                android:id="@+id/gameScreenMenuButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Menu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/gameScreenUndoButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Undo" />
+
+            <Button
+                android:id="@+id/gameScreenResetButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reset" />
+
+            <Button
+                android:id="@+id/gameScreenSettingsButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Settings" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gameScreenInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/gameScreenPlayerAvatar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/gameScreenText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Player 1's Turn"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/gameScreenPlayerIndicatorImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/twitter_logo" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/gameScreenTurnTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Timer" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gameRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/gameScreenEndButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/gameScreenRematchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rematch"
+                android:layout_marginEnd="30dp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/gameScreenHomeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

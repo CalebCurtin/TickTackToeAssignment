@@ -3,6 +3,7 @@ package com.assignment.ticktacktoeassignment.gamescreen;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -297,6 +298,9 @@ public class GameScreenFragment extends Fragment {
                         break;
                 }
 
+                // turn off the timer
+
+
                 // update the stats
                 mainActivityDataViewModel.gameEnded(!aiIsActive, winner);
 
@@ -462,7 +466,8 @@ public class GameScreenFragment extends Fragment {
         public void run() {
             if (turnTimeLeft <= 0) {
                 turnTimer.setText("Times Up!");
-
+                FragmentActivity activity = getActivity();
+                if (activity == null) { return; } // user closed the fragment and the timer ended
                 MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
 
                 // update the display

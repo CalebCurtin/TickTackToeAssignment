@@ -1,6 +1,8 @@
 package com.assignment.ticktacktoeassignment.gamescreen;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate Layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_card, parent, false);
-        this.gridSize = gridLayoutManager.getWidth() / gridLayoutManager.getSpanCount();
+        if (view.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.gridSize = gridLayoutManager.getWidth() / gridLayoutManager.getSpanCount();
+        } else {
+            this.gridSize = gridLayoutManager.getHeight() / gridLayoutManager.getSpanCount();
+        }
         return new RecyclerViewHolder(view);
     }
 
