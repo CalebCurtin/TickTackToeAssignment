@@ -53,10 +53,8 @@ public class AvatarRecyclerViewAdapter extends RecyclerView.Adapter<AvatarRecycl
 
                 if (currentFragment instanceof UserProfileFragment) {
                     viewModel.playerOneAvatar = imageResourceId;
-                    Log.d("AvatarRecyclerViewAdapter", "Clicked in UserProfileFragment");
                 } else if (currentFragment instanceof UserProfileTwoFragment) {
                     viewModel.playerTwoAvatar = imageResourceId;
-                    Log.d("AvatarRecyclerViewAdapter", "Clicked in UserProfileTwoFragment");
                 }
             }
         });

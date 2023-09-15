@@ -301,15 +301,15 @@ public class GameScreenFragment extends Fragment {
                 switch (winner) {
                     case 1:
                         infoText.setText(player1Name + " won!");
-                        playerAvatar.setImageResource(player1Avatar);
+                        playerAvatar.setImageResource(mainActivityDataViewModel.playerOneAvatar);
                         break;
                     case 2:
                         infoText.setText(player2Name + " won!");
-                        playerAvatar.setImageResource(player2Avatar);
+                        playerAvatar.setImageResource(mainActivityDataViewModel.playerTwoAvatar);
                         break;
                     case 3:
                         infoText.setText("It's a Draw!");
-                        playerAvatar.setVisibility(View.GONE);
+                        playerAvatar.setImageResource(R.drawable.draw);
                         break;
                 }
 
