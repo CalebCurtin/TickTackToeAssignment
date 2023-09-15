@@ -24,7 +24,7 @@
             android:layout_marginStart="50pt"
             android:layout_marginTop="10pt"
             android:layout_marginEnd="50pt"
-            android:text="Welcome to the TicTac Toe game (landscape)"
+            android:text="Welcome to the TicTac Toe game"
             android:textSize="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
