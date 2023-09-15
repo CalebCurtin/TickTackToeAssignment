@@ -132,13 +132,10 @@ public class SettingsFragment extends Fragment {
 
     private void populateXMarkersSpinner() {
         // Create an array of image resource IDs
-        Drawable[] images = {
-                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.default_x, null),
-                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.twitter_logo, null)
-        };
+        Integer[] images = { R.drawable.default_x, R.drawable.twitter_logo };
 
         // Create a custom ArrayAdapter that can draw images
-        ImageSpinnerArrayAdapter adapter = new ImageSpinnerArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, images);
+        ImageSpinnerArrayAdapter adapter = new ImageSpinnerArrayAdapter(requireContext(), getActivity(), images);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         xMarkerSpinner.setAdapter(adapter);
@@ -146,13 +143,10 @@ public class SettingsFragment extends Fragment {
 
     private void populateOMarkersSpinner() {
         // Create an array of image resource IDs
-        Drawable[] images = {
-                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.default_o, null),
-                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.operagx_logo, null)
-        };
+        Integer[] images = { R.drawable.default_o, R.drawable.operagx_logo };
 
         // Create a custom ArrayAdapter that can draw images
-        ImageSpinnerArrayAdapter adapter = new ImageSpinnerArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, images);
+        ImageSpinnerArrayAdapter adapter = new ImageSpinnerArrayAdapter(requireContext(), getActivity(), images);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         oMarkerSpinner.setAdapter(adapter);
@@ -164,6 +158,8 @@ public class SettingsFragment extends Fragment {
         String boardSize = boardSizeSpinner.getSelectedItem().toString();
         String winCondition = winConditionSpinner.getSelectedItem().toString();
         String playerMarker = playerMarkersSpinner.getSelectedItem().toString();
+        int xMarker = (Integer)xMarkerSpinner.getSelectedItem();
+        int oMarker = (Integer)oMarkerSpinner.getSelectedItem();
 
         int board = parseBoardSize(boardSize);
         int winCon = parseWinCon(winCondition);
@@ -178,6 +174,8 @@ public class SettingsFragment extends Fragment {
         mainActivityData.boardSize = board;
         mainActivityData.winCondition = winCon;
         mainActivityData.xOnPlayer1 = player;
+        mainActivityData.xMarker = xMarker;
+        mainActivityData.oMarker = oMarker;
 
         return saveSuccess;
     }

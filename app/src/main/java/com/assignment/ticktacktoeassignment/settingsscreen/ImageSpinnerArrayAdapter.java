@@ -1,5 +1,6 @@
 package com.assignment.ticktacktoeassignment.settingsscreen;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -9,15 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
-public class ImageSpinnerArrayAdapter extends ArrayAdapter<Drawable> {
-    public ImageSpinnerArrayAdapter(@NonNull Context context, int resource, Drawable[] images) {
+import com.assignment.ticktacktoeassignment.R;
+
+public class ImageSpinnerArrayAdapter extends ArrayAdapter<Integer> {
+    private Activity activity;
+    public ImageSpinnerArrayAdapter(@NonNull Context context, Activity activity, Integer[] images) {
         super(context, android.R.layout.simple_spinner_item, images);
+        this.activity = activity;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView label = (TextView) super.getView(position, convertView, parent);
-        Drawable image = getItem(position);
+        int imageID = getItem(position);
+        Drawable image = ResourcesCompat.getDrawable(activity.getResources(), imageID, null);
+
         label.setText("");
         image.setBounds(0, 0, 100, 100);
         label.setCompoundDrawables(null, null, image, null);
@@ -28,7 +35,9 @@ public class ImageSpinnerArrayAdapter extends ArrayAdapter<Drawable> {
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         TextView label = (TextView) super.getView(position, convertView, parent);
-        Drawable image = getItem(position);
+        int imageID = getItem(position);
+        Drawable image = ResourcesCompat.getDrawable(activity.getResources(), imageID, null);
+
         label.setText("");
         image.setBounds(0, 0, 100, 100);
         label.setCompoundDrawables(null, null, image, null);
