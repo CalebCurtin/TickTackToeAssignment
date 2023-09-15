@@ -26,31 +26,35 @@
             android:layout_marginEnd="50pt"
             android:text="Welcome to the TicTac Toe game"
             android:textSize="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="316dp"
-            android:layout_height="303dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HelloMessage">
+            app:layout_constraintTop_toTopOf="@+id/guideline2">
 
             <Button
                 android:id="@+id/start2PlayerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2 Player Game" />
+                android:text="2 Player Game"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/start1PlayerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Single Player Game"
+                android:textSize="25dp"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="470dp" />
 
@@ -58,26 +62,44 @@
                 android:id="@+id/profileButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Player One" />
+                android:text="Edit Player One"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/profileButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Player Two" />
+                android:text="Edit Player Two"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/settingsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Settings" />
+                android:text="Settings"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/statsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="View Stats" />
+                android:text="View Stats"
+                android:textSize="25dp" />
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

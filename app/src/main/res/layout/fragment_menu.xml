@@ -34,8 +34,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="295dp"
-            android:layout_height="331dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,13 +47,15 @@
                 android:id="@+id/start2PlayerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2 Player Game" />
+                android:text="2 Player Game"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/start1PlayerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Single Player Game"
+                android:textSize="25dp"
                 tools:layout_editor_absoluteX="160dp"
                 tools:layout_editor_absoluteY="470dp" />
 
@@ -61,25 +63,29 @@
                 android:id="@+id/profileButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Player One" />
+                android:text="Edit Player One"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/profileButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Player Two" />
+                android:text="Edit Player Two"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/settingsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Settings" />
+                android:text="Settings"
+                android:textSize="25dp" />
 
             <Button
                 android:id="@+id/statsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="View Stats" />
+                android:text="View Stats"
+                android:textSize="25dp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
