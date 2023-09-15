@@ -9,20 +9,20 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="267dp"
+        android:layout_width="100dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -41,8 +41,8 @@
 
             <Spinner
                 android:id="@+id/BoardSize"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,8 +61,8 @@
 
             <Spinner
                 android:id="@+id/WinCon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -82,14 +82,14 @@
 
             <Spinner
                 android:id="@+id/Markers"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
+            android:paddingBottom="30dp"
             android:orientation="horizontal">
 
             <TextView
@@ -103,13 +103,13 @@
             <Spinner
                 android:id="@+id/XMarkers"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
+            android:paddingBottom="30dp"
             android:orientation="horizontal">
 
             <TextView

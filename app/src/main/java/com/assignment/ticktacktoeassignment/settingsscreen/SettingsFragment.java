@@ -1,8 +1,13 @@
-package com.assignment.ticktacktoeassignment;
+package com.assignment.ticktacktoeassignment.settingsscreen;
 
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
+
+import com.assignment.ticktacktoeassignment.MainActivityData;
+import com.assignment.ticktacktoeassignment.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +39,8 @@ public class SettingsFragment extends Fragment {
     private Spinner boardSizeSpinner;
     private Spinner winConditionSpinner;
     private Spinner playerMarkersSpinner;
+    private Spinner xMarkerSpinner;
+    private Spinner oMarkerSpinner;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -71,10 +81,14 @@ public class SettingsFragment extends Fragment {
         boardSizeSpinner = view.findViewById(R.id.BoardSize);
         winConditionSpinner = view.findViewById(R.id.WinCon);
         playerMarkersSpinner = view.findViewById(R.id.Markers);
+        xMarkerSpinner = view.findViewById(R.id.XMarkers);
+        oMarkerSpinner = view.findViewById(R.id.OMarkers);
 
         populateBoardSizeSpinner();
         populateWinConditionSpinner();
         populatePlayerMarkersSpinner();
+        populateXMarkersSpinner();
+        populateOMarkersSpinner();
         Button saveButton = view.findViewById(R.id.button);
         saveButton.setOnClickListener(new View.OnClickListener()
         {
@@ -114,6 +128,34 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, playerMarkerOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerMarkersSpinner.setAdapter(adapter);
+    }
+
+    private void populateXMarkersSpinner() {
+        // Create an array of image resource IDs
+        Drawable[] images = {
+                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.default_x, null),
+                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.twitter_logo, null)
+        };
+
+        // Create a custom ArrayAdapter that can draw images
+        ImageSpinnerArrayAdapter adapter = new ImageSpinnerArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, images);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        xMarkerSpinner.setAdapter(adapter);
+    }
+
+    private void populateOMarkersSpinner() {
+        // Create an array of image resource IDs
+        Drawable[] images = {
+                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.default_o, null),
+                ResourcesCompat.getDrawable(getActivity().getResources(), R.drawable.operagx_logo, null)
+        };
+
+        // Create a custom ArrayAdapter that can draw images
+        ImageSpinnerArrayAdapter adapter = new ImageSpinnerArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, images);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        oMarkerSpinner.setAdapter(adapter);
     }
 
     private boolean saveSettings(MainActivityData mainActivityData)

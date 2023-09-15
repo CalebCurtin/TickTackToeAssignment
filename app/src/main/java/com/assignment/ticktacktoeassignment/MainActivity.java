@@ -10,6 +10,7 @@ import android.view.View;
 import android.os.Bundle;
 
 import com.assignment.ticktacktoeassignment.gamescreen.GameScreenFragment;
+import com.assignment.ticktacktoeassignment.settingsscreen.SettingsFragment;
 
 
 public class MainActivity extends AppCompatActivity {
