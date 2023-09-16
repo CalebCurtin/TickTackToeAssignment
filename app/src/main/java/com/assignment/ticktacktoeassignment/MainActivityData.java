@@ -1,5 +1,7 @@
 package com.assignment.ticktacktoeassignment;
 
+import android.widget.ImageView;
+
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -38,6 +40,12 @@ public class MainActivityData extends ViewModel {
     private int p2_winPercent = 0;
     private int p1_draws = 0;
     private int p2_draws = 0;
+
+    // Game State Saver
+    public Map<String, Integer> gameState;
+    public int[][] board;
+    public ImageView[][] boardImages;
+    public boolean gameInProgress = false;
 
     public MainActivityData() {
         clickedValue = new MediatorLiveData<Fragments>();

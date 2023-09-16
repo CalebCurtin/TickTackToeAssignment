@@ -20,6 +20,8 @@ import com.assignment.ticktacktoeassignment.MainActivityData;
 import com.assignment.ticktacktoeassignment.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -70,10 +72,8 @@ public class GameScreenFragment extends Fragment {
     private int oMarker;
     private TextView player1MovesTextView;
     private TextView player2MovesTextView;
-    int player1Moves = 0;
-    int player2Moves = 0;
-
-    private int currentTimerID;
+    private int player1Moves = 0;
+    private int player2Moves = 0;
 
     private String mParam1;
     private String mParam2;
@@ -107,6 +107,11 @@ public class GameScreenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        saveData();
     }
 
     @Override
@@ -148,7 +153,11 @@ public class GameScreenFragment extends Fragment {
         buildButtons();
 
         // Setup the game
-        restartGame();
+        if (mainActivityDataViewModel.gameInProgress) {
+            resumeGame(mainActivityDataViewModel);
+        } else {
+            restartGame();
+        }
         return rootView;
     }
 
@@ -244,7 +253,6 @@ public class GameScreenFragment extends Fragment {
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), boardSize);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(recyclerDataArrayList, this, layoutManager);
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -427,6 +435,16 @@ public class GameScreenFragment extends Fragment {
 
     public void addImageViewToBoard(int x, int y, ImageView image) {
         boardImages[x][y] = image;
+        if (board[x][y] == 1) {
+            boardImages[x][y].setImageResource(xMarker);
+            boardImages[x][y].setImageAlpha(255);
+        }
+
+        if (board[x][y] == 2) {
+            boardImages[x][y].setImageResource(oMarker);
+            boardImages[x][y].setImageAlpha(255);
+        }
+        Log.d("santasspy", "added image at " + x + "," + y);
     }
 
     private class ChangeScreenOnClickListener implements View.OnClickListener {
@@ -438,6 +456,7 @@ public class GameScreenFragment extends Fragment {
         @Override
         public void onClick(View view) {
             MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+            mainActivityDataViewModel.gameInProgress = false;
             mainActivityDataViewModel.changeFragment(targetScreen);
         }
     }
@@ -511,4 +530,72 @@ public class GameScreenFragment extends Fragment {
             }
         }
     };
+
+    private void saveData() {
+        Map<String, Integer> gameState = new HashMap<>();
+        if (placeAnX) { gameState.put("placeAnX", 1); }
+        else { gameState.put("placeAnX", 0); }
+
+        if (player1) { gameState.put("player1", 1); }
+        else { gameState.put("player1", 0); }
+
+        if (gameActive) { gameState.put("gameActive", 1); }
+        else { gameState.put("gameActive", 0); }
+
+        gameState.put("moveCount", moveCount);
+        gameState.put("turnTimeLeft", turnTimeLeft);
+        gameState.put("lastMoveX", lastMove[0]);
+        gameState.put("lastMoveY", lastMove[1]);
+        gameState.put("player1Moves", player1Moves);
+        gameState.put("player2Moves", player2Moves);
+
+        MainActivityData mainActivityDataViewModel = new ViewModelProvider(getActivity()).get(MainActivityData.class);
+        mainActivityDataViewModel.gameState = gameState;
+        mainActivityDataViewModel.board = board;
+        mainActivityDataViewModel.gameInProgress = true;
+    }
+
+    private void resumeGame(MainActivityData viewModel) {
+        if (viewModel.gameState.get("placeAnX") == 1) { placeAnX = true; }
+        else { placeAnX = false; }
+
+        if (viewModel.gameState.get("player1") == 1) { player1 = true; }
+        else { player1 = false; }
+
+        if (viewModel.gameState.get("gameActive") == 1) { gameActive = true; }
+        else { gameActive = false; }
+
+        moveCount = viewModel.gameState.get("moveCount");
+        turnTimeLeft = viewModel.gameState.get("turnTimeLeft");
+        lastMove[0] = viewModel.gameState.get("lastMoveX");
+        lastMove[1] = viewModel.gameState.get("lastMoveY");
+        player1Moves = viewModel.gameState.get("player1Moves");
+        player2Moves = viewModel.gameState.get("player2Moves");
+        board = viewModel.board;
+
+        boardImages =  new ImageView[boardSize][boardSize];
+        setupRecycler(rootView);
+
+        /*
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (board[i][j] == 1) {
+                    boardImages[i][j].setImageResource(xMarker);
+                    boardImages[i][j].setImageAlpha(255);
+                }
+
+                if (board[i][j] == 2) {
+                    boardImages[i][j].setImageResource(oMarker);
+                    boardImages[i][j].setImageAlpha(255);
+                }
+            }
+        }
+        */
+
+        player1MovesTextView.setText("Player 1 Moves: " + player1Moves);
+        player2MovesTextView.setText("Player 2 Moves: " + player2Moves);
+
+        turnTimer.setText("Turn Timer: " + turnTimeLeft + "s");
+        handler.postDelayed(tickTimer, 1000);
+    }
 }

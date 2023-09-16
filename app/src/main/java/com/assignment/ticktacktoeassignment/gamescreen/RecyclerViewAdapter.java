@@ -50,9 +50,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.y = recyclerData.y;
         holder.imageView.setImageResource(recyclerData.imageID);
         gameFrag.addImageViewToBoard(holder.x, holder.y, holder.imageView);
+        Log.d("santasspy", "Binding view holder for " + position);
 
         // Work out how large the images should be based on the width of the screen
-        Log.println(Log.INFO, "santasspy", "gridSquareWidth: " + gridSize);
         ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
         layoutParams.width = gridSize;
         layoutParams.height = gridSize;

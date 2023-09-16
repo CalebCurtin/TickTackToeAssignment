@@ -14,12 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <Button
         android:id="@+id/profile_backBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="187dp"
+        android:layout_height="53dp"
         android:text="Back"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,11 +29,11 @@
 
     <EditText
         android:id="@+id/profile_editText"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Enter Player Two Name"
-        android:textSize="32sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.90" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -68,7 +68,7 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choose character(Drag image to view more)"
             android:textSize="20sp"
