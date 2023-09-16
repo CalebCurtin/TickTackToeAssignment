@@ -478,6 +478,9 @@ public class GameScreenFragment extends Fragment {
                 placeAnX = !placeAnX;
                 player1 = !player1;
                 updatePlayerIndicator();
+
+                if (aiIsActive && !player1) { handler.postDelayed(runAITask, 600); }
+                lastImageClicked = null; // stop repeated clicks
             }
         }
     }
@@ -576,24 +579,11 @@ public class GameScreenFragment extends Fragment {
         boardImages =  new ImageView[boardSize][boardSize];
         setupRecycler(rootView);
 
-        /*
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                if (board[i][j] == 1) {
-                    boardImages[i][j].setImageResource(xMarker);
-                    boardImages[i][j].setImageAlpha(255);
-                }
-
-                if (board[i][j] == 2) {
-                    boardImages[i][j].setImageResource(oMarker);
-                    boardImages[i][j].setImageAlpha(255);
-                }
-            }
-        }
-        */
-
         player1MovesTextView.setText("Player 1 Moves: " + player1Moves);
         player2MovesTextView.setText("Player 2 Moves: " + player2Moves);
+
+        if (player1) { playerIndicator.setImageResource(player1Avatar); }
+        else { playerIndicator.setImageResource(player2Avatar); }
 
         turnTimer.setText("Turn Timer: " + turnTimeLeft + "s");
         handler.postDelayed(tickTimer, 1000);
