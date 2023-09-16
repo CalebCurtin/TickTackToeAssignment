@@ -33,58 +33,71 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2">
 
-            <Button
-                android:id="@+id/start2PlayerButton"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2 Player Game"
-                android:textSize="25dp" />
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp">
 
-            <Button
-                android:id="@+id/start1PlayerButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Single Player Game"
-                android:textSize="25dp"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="470dp" />
+                <Button
+                    android:id="@+id/start2PlayerButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2 Player Game"
+                    android:textSize="25dp" />
 
-            <Button
-                android:id="@+id/profileButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Player One"
-                android:textSize="25dp" />
+                <Button
+                    android:id="@+id/start1PlayerButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Single Player Game"
+                    android:textSize="25dp"
+                    tools:layout_editor_absoluteX="160dp"
+                    tools:layout_editor_absoluteY="470dp" />
 
-            <Button
-                android:id="@+id/profileButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Player Two"
-                android:textSize="25dp" />
+                <Button
+                    android:id="@+id/statsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Stats"
+                    android:textSize="25dp" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/settingsButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textSize="25dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/statsButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="View Stats"
-                android:textSize="25dp" />
+                <Button
+                    android:id="@+id/profileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Player One"
+                    android:textSize="25dp" />
+
+                <Button
+                    android:id="@+id/profileButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Player Two"
+                    android:textSize="25dp" />
+
+                <Button
+                    android:id="@+id/settingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textSize="25dp" />
+            </LinearLayout>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
